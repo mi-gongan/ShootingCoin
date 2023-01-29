@@ -4,14 +4,15 @@ pragma solidity ^0.8.9;
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
-import "./ShootingRole.sol";
+import "./interface/IShootingRole.sol";
 
-contract ShootingNFT is ERC721, ShootingRole {
+contract ShootingNFT is ERC721 {
     using ECDSA for bytes32;
 
     uint8 constant DEPENSE = 0;
 
     string public baseURI;
+    address internal shootingRole;
 
     mapping(address => uint256[]) private stakedNFT;
     mapping(uint256 => StatsInfo) private nftStats;
@@ -21,7 +22,17 @@ contract ShootingNFT is ERC721, ShootingRole {
         uint248 amount;
     }
 
-    constructor() ERC721("ShootingNFT", "SNFT") {}
+    modifier onlyAdmin() {
+        require(
+            IShootingRole(shootingRole).isAdmin(msg.sender),
+            "ShootingRole: only amdin"
+        );
+        _;
+    }
+
+    constructor(address roleContract) ERC721("ShootingNFT", "SNFT") {
+        shootingRole = roleContract;
+    }
 
     function mint(address to, uint256 tokenId) public {
         _safeMint(to, tokenId);
@@ -51,7 +62,10 @@ contract ShootingNFT is ERC721, ShootingRole {
         address relayer,
         bytes memory relayerSignature
     ) public {
-        require(isRelayer(relayer), "You are not the relayer of this NFT");
+        require(
+            IShootingRole(shootingRole).isRelayer(relayer),
+            "You are not the relayer of this NFT"
+        );
         require(verifyStake(msg.sender, userSignature));
         require(verifyStake(relayer, relayerSignature));
         require(
@@ -68,7 +82,10 @@ contract ShootingNFT is ERC721, ShootingRole {
         address relayer,
         bytes memory relayerSignature
     ) public {
-        require(isRelayer(relayer), "You are not the relayer of this NFT");
+        require(
+            IShootingRole(shootingRole).isRelayer(relayer),
+            "You are not the relayer of this NFT"
+        );
         require(verifyUnstake(msg.sender, userSignature));
         require(verifyUnstake(relayer, relayerSignature));
         require(
@@ -129,14 +146,5 @@ contract ShootingNFT is ERC721, ShootingRole {
         require(signer == _signer, "Invalid signer");
 
         return true;
-    }
-
-    function supportsInterface(bytes4 interfaceId)
-        public
-        view
-        override(ERC721, AccessControl)
-        returns (bool)
-    {
-        return super.supportsInterface(interfaceId);
     }
 }

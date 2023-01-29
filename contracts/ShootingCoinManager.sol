@@ -5,7 +5,9 @@ import "./ShootingRole.sol";
 import "./libs/GameCore.sol";
 import "./libs/CurrencyController.sol";
 
-contract ShootingCoinManager is ShootingRole, GameCore, CurrencyController {
+import "./interface/IShootingRole.sol";
+
+contract ShootingCoinManager is GameCore, CurrencyController {
     event GameInited(
         uint256 gameId,
         address user1,
@@ -20,9 +22,14 @@ contract ShootingCoinManager is ShootingRole, GameCore, CurrencyController {
         GameHistory gameHistory
     );
 
+    constructor(address roleContract) {
+        shootingRole = roleContract;
+    }
+
     function EnterGame(BetInfo memory userBetInfo, uint256 gameId) public {
         require(userBetInfo.userAccount == msg.sender, "wrong user");
-        if (isRelayer(userBetInfo.userAccount)) revert("relayer can't play");
+        if (IShootingRole(shootingRole).isRelayer(userBetInfo.userAccount))
+            revert("relayer can't play");
         if (isOnGame[userBetInfo.userAccount] != 0) revert("user is on game");
 
         //TODO: 사용한 nft가 스테이킹 되어있는지 체크하는 로직 필요

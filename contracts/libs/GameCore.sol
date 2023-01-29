@@ -1,7 +1,10 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import "../interface/IShootingRole.sol";
+
 contract GameCore {
+    address internal shootingRole;
     //user on game, user address => game id
     mapping(address => uint256) public isOnGame;
 
@@ -40,6 +43,14 @@ contract GameCore {
         uint8 user1GetCoinId;
         uint8 user2GetCoinId;
         uint240 timeStamp;
+    }
+
+    modifier onlyRelayer() {
+        require(
+            IShootingRole(shootingRole).isRelayer(msg.sender),
+            "ShootingRole: only relayer"
+        );
+        _;
     }
 
     function getGameInfo(uint256 gameId) public view returns (GameInfo memory) {

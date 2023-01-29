@@ -37,4 +37,8 @@ contract ShootingRole is AccessControl {
     function isRelayer(address account) public view returns (bool) {
         return hasRole(RELAYER_ROLE, account);
     }
+
+    function isAdmin(address account) public view returns (bool) {
+        return hasRole(DEFAULT_ADMIN_ROLE, account);
+    }
 }

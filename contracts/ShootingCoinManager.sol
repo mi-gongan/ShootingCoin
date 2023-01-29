@@ -2,53 +2,10 @@
 pragma solidity ^0.8.9;
 
 import "./ShootingRole.sol";
-import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+import "./libs/GameCore.sol";
+import "./libs/CurrencyController.sol";
 
-contract ShootingCoinManager is ShootingRole {
-    address constant ETH_ADDRESS = address(0);
-
-    //user on game, user address => game id
-    mapping(address => uint256) public isOnGame;
-    //user betting coin balance, user address => coin address => amount
-    mapping(address => mapping(address => uint256))
-        public userBettingCoinBalance;
-    //game info
-    mapping(uint256 => GameInfo) public gameInfo;
-    //game history
-    mapping(address => GameHistory[]) public gameHistory;
-    //coin whitelist
-    mapping(address => bool) public whitelist;
-
-    struct BetInfo {
-        address userAccount;
-        CoinInfo coin1;
-        CoinInfo coin2;
-        CoinInfo coin3;
-        CoinInfo coin4;
-        CoinInfo coin5;
-    }
-
-    struct CoinInfo {
-        address coinAddress;
-        uint256 amount;
-        //if not, 0
-        uint256 statId;
-    }
-
-    struct GameInfo {
-        BetInfo user1BetInfo;
-        BetInfo user2BetInfo;
-    }
-
-    struct GameHistory {
-        uint256 gameId;
-        // digit 1: coin1, digit 2: coin2, digit 3: coin3, digit 4: coin4, digit 5: coin5
-        // if 1, win, if 0, lose
-        uint8 user1GetCoinId;
-        uint8 user2GetCoinId;
-        uint240 timeStamp;
-    }
-
+contract ShootingCoinManager is ShootingRole, GameCore, CurrencyController {
     event GameInited(
         uint256 gameId,
         address user1,
@@ -74,7 +31,7 @@ contract ShootingCoinManager is ShootingRole {
         //TODO: betting info에 따라 contract에 transferFrom 해야함
         //TODO: transfer 완료되면 userBettingCoinBalance에 추가해야함
 
-        enterGame(userBetInfo.userAccount, gameId);
+        _enterGame(userBetInfo.userAccount, gameId);
     }
 
     function startGame(
@@ -119,8 +76,8 @@ contract ShootingCoinManager is ShootingRole {
         gameHistory[user1BetInfo.userAccount].push(_gameHistory);
         gameHistory[user2BetInfo.userAccount].push(_gameHistory);
 
-        endGame(user1BetInfo.userAccount);
-        endGame(user2BetInfo.userAccount);
+        _endGame(user1BetInfo.userAccount);
+        _endGame(user2BetInfo.userAccount);
 
         emit GameSettled(
             gameId,
@@ -128,44 +85,5 @@ contract ShootingCoinManager is ShootingRole {
             user2BetInfo.userAccount,
             _gameHistory
         );
-    }
-
-    function withdrawCoin(address coinAddress, uint256 amount) public {
-        //게임 중인지 체크, 끝났다면 자기 돈은 자기만 인출 가능
-        require(
-            userBettingCoinBalance[msg.sender][coinAddress] >= amount,
-            "not enough coin"
-        );
-
-        userBettingCoinBalance[msg.sender][coinAddress] -= amount;
-        ditstributeCoin(msg.sender, coinAddress, amount);
-    }
-
-    function depositCoin(address coinAddress, uint256 amount) public payable {
-        if (coinAddress == ETH_ADDRESS) {
-            require(msg.value == amount, "wrong amount");
-        } else {
-            IERC20(coinAddress).transferFrom(msg.sender, address(this), amount);
-        }
-    }
-
-    function ditstributeCoin(
-        address userAccount,
-        address coinAddress,
-        uint256 amount
-    ) internal {
-        if (coinAddress == ETH_ADDRESS) {
-            payable(userAccount).transfer(amount);
-        } else {
-            IERC20(coinAddress).transfer(userAccount, amount);
-        }
-    }
-
-    function enterGame(address userAccount, uint256 gameId) public {
-        isOnGame[userAccount] = gameId;
-    }
-
-    function endGame(address userAccount) public {
-        isOnGame[userAccount] = 0;
     }
 }

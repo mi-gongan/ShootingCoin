@@ -52,14 +52,31 @@ contract ShootingNFT is ERC721, ShootingRole {
         bytes memory relayerSignature
     ) public {
         require(isRelayer(relayer), "You are not the relayer of this NFT");
-        require(verify(msg.sender, userSignature));
-        require(verify(relayer, relayerSignature));
+        require(verifyStake(msg.sender, userSignature));
+        require(verifyStake(relayer, relayerSignature));
         require(
             ownerOf(tokenId) == msg.sender,
             "You are not the owner of this NFT"
         );
 
         stakedNFT[msg.sender].push(tokenId);
+    }
+
+    function unStakeNFT(
+        uint256 tokenId,
+        bytes memory userSignature,
+        address relayer,
+        bytes memory relayerSignature
+    ) public {
+        require(isRelayer(relayer), "You are not the relayer of this NFT");
+        require(verifyUnstake(msg.sender, userSignature));
+        require(verifyUnstake(relayer, relayerSignature));
+        require(
+            ownerOf(tokenId) == msg.sender,
+            "You are not the owner of this NFT"
+        );
+
+        delete stakedNFT[msg.sender][tokenId];
     }
 
     function isStake(address user, uint256 tokenId) public view returns (bool) {
@@ -78,7 +95,7 @@ contract ShootingNFT is ERC721, ShootingRole {
         return (nftStats[tokenId].statType, nftStats[tokenId].amount);
     }
 
-    function verify(address _signer, bytes memory _signature)
+    function verifyStake(address _signer, bytes memory _signature)
         public
         pure
         returns (bool)
@@ -87,6 +104,24 @@ contract ShootingNFT is ERC721, ShootingRole {
 
         bytes32 origin = keccak256(
             abi.encodePacked("\x19Ethereum Signed Message:\n32", message)
+        );
+
+        address signer = origin.recover(_signature);
+
+        require(signer == _signer, "Invalid signer");
+
+        return true;
+    }
+
+    function verifyUnstake(address _signer, bytes memory _signature)
+        public
+        pure
+        returns (bool)
+    {
+        string memory message = "I agree to unstake";
+
+        bytes32 origin = keccak256(
+            abi.encodePacked("\x19Ethereum Signed Message:\n36", message)
         );
 
         address signer = origin.recover(_signature);

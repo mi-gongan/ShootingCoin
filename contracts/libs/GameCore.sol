@@ -5,6 +5,7 @@ import "../interface/IShootingRole.sol";
 
 contract GameCore {
     address internal shootingRole;
+    address internal shootingNft;
     //user on game, user address => game id
     mapping(address => uint256) public isOnGame;
 
@@ -27,8 +28,6 @@ contract GameCore {
     struct CoinInfo {
         address coinAddress;
         uint256 amount;
-        //if not, 0
-        uint256 statId;
     }
 
     struct GameInfo {
@@ -39,7 +38,7 @@ contract GameCore {
     struct GameHistory {
         uint256 gameId;
         // digit 1: coin1, digit 2: coin2, digit 3: coin3, digit 4: coin4, digit 5: coin5
-        // if 1, win, if 0, lose
+        // if 1, get the coin of opponent
         uint8 user1GetCoinId;
         uint8 user2GetCoinId;
         uint240 timeStamp;

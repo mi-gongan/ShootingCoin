@@ -6,8 +6,9 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 import "./interface/IShootingRole.sol";
 import "./interface/IShootingGame.sol";
+import "./interface/IStaking.sol";
 
-contract ShootingNFT is ERC721 {
+contract ShootingNFT is ERC721, IStaking {
     using ECDSA for bytes32;
 
     uint8 constant DEPENSE = 0;
@@ -21,7 +22,7 @@ contract ShootingNFT is ERC721 {
 
     struct StatsInfo {
         uint8 statType;
-        uint248 amount;
+        uint88 value;
     }
 
     modifier onlyAdmin() {
@@ -97,8 +98,8 @@ contract ShootingNFT is ERC721 {
         return false;
     }
 
-    function getStat(uint256 tokenId) public view returns (uint8, uint248) {
-        return (nftStats[tokenId].statType, nftStats[tokenId].amount);
+    function getStat(uint256 tokenId) public view returns (uint8, uint88) {
+        return (nftStats[tokenId].statType, nftStats[tokenId].value);
     }
 
     function verifyStake(address _signer, bytes memory _signature)

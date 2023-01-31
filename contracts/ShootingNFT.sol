@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 
 import "./interface/IShootingRole.sol";
+import "./interface/IShootingGame.sol";
 
 contract ShootingNFT is ERC721 {
     using ECDSA for bytes32;
@@ -13,6 +14,7 @@ contract ShootingNFT is ERC721 {
 
     string public baseURI;
     address internal shootingRole;
+    address internal shootingManager;
 
     mapping(address => uint256[]) private stakedNFT;
     mapping(uint256 => StatsInfo) private nftStats;
@@ -30,8 +32,11 @@ contract ShootingNFT is ERC721 {
         _;
     }
 
-    constructor(address roleContract) ERC721("ShootingNFT", "SNFT") {
+    constructor(address roleContract, address managerContract)
+        ERC721("ShootingNFT", "SNFT")
+    {
         shootingRole = roleContract;
+        shootingManager = managerContract;
     }
 
     function mint(address to, uint256 tokenId) public {
@@ -56,18 +61,8 @@ contract ShootingNFT is ERC721 {
         baseURI = afterBaseURI;
     }
 
-    function stakeNFT(
-        uint256 tokenId,
-        bytes memory userSignature,
-        address relayer,
-        bytes memory relayerSignature
-    ) public {
-        require(
-            IShootingRole(shootingRole).isRelayer(relayer),
-            "You are not the relayer of this NFT"
-        );
+    function stakeNFT(uint256 tokenId, bytes memory userSignature) public {
         require(verifyStake(msg.sender, userSignature));
-        require(verifyStake(relayer, relayerSignature));
         require(
             ownerOf(tokenId) == msg.sender,
             "You are not the owner of this NFT"
@@ -76,21 +71,15 @@ contract ShootingNFT is ERC721 {
         stakedNFT[msg.sender].push(tokenId);
     }
 
-    function unStakeNFT(
-        uint256 tokenId,
-        bytes memory userSignature,
-        address relayer,
-        bytes memory relayerSignature
-    ) public {
-        require(
-            IShootingRole(shootingRole).isRelayer(relayer),
-            "You are not the relayer of this NFT"
-        );
+    function unStakeNFT(uint256 tokenId, bytes memory userSignature) public {
         require(verifyUnstake(msg.sender, userSignature));
-        require(verifyUnstake(relayer, relayerSignature));
         require(
             ownerOf(tokenId) == msg.sender,
             "You are not the owner of this NFT"
+        );
+        require(
+            IShootingGame(shootingManager).checkOnGame(msg.sender) != 0,
+            "You are on the game"
         );
 
         delete stakedNFT[msg.sender][tokenId];

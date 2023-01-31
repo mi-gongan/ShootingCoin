@@ -6,8 +6,9 @@ import "./libs/GameCore.sol";
 import "./libs/CurrencyController.sol";
 
 import "./interface/IShootingRole.sol";
+import "./interface/IShootingGame.sol";
 
-contract ShootingCoinManager is GameCore, CurrencyController {
+contract ShootingCoinManager is GameCore, CurrencyController, IShootingGame {
     event GameInited(
         uint256 gameId,
         address user1,
@@ -92,5 +93,9 @@ contract ShootingCoinManager is GameCore, CurrencyController {
             user2BetInfo.userAccount,
             _gameHistory
         );
+    }
+
+    function checkOnGame(address userAccount) public view returns (uint256) {
+        return isOnGame[userAccount];
     }
 }

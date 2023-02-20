@@ -4,8 +4,8 @@ pragma solidity ^0.8.9;
 import "../interface/IShootingRole.sol";
 
 contract GameCore {
-    address internal shootingRole;
-    address internal shootingNft;
+    address public shootingRole;
+    address public shootingNft;
     //user on game, user address => game id
     mapping(address => uint256) public isOnGame;
 
@@ -52,16 +52,28 @@ contract GameCore {
         _;
     }
 
-    function getGameInfo(uint256 gameId) public view returns (GameInfo memory) {
-        return gameInfo[gameId];
+    modifier onlyAdmin() {
+        require(
+            IShootingRole(shootingRole).isAdmin(msg.sender),
+            "ShootingRole: only admin"
+        );
+        _;
     }
 
-    function getHistory(address userAccount)
-        public
-        view
-        returns (GameHistory[] memory)
-    {
-        return gameHistory[userAccount];
+    function updateShootingRole(address roleContract) public onlyAdmin {
+        shootingRole = roleContract;
+    }
+
+    function updateShootingNft(address nftContract) public onlyAdmin {
+        shootingNft = nftContract;
+    }
+
+    function getShootingRole() public view returns (address) {
+        return shootingRole;
+    }
+
+    function getShootingNft() public view returns (address) {
+        return shootingNft;
     }
 
     function _enterGame(address userAccount, uint256 gameId) internal {

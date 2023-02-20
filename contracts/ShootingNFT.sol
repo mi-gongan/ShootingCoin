@@ -1,21 +1,22 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol";
 import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 import "./interface/IShootingRole.sol";
 import "./interface/IShootingGame.sol";
 import "./interface/IStaking.sol";
 
-contract ShootingNFT is ERC721, IStaking {
+contract ShootingNFT is ERC721EnumerableUpgradeable, IStaking {
     using ECDSA for bytes32;
 
     uint8 constant DEPENSE = 0;
 
     string public baseURI;
-    address internal shootingRole;
-    address internal shootingManager;
+    address public shootingRole;
+    address public shootingManager;
 
     mapping(address => uint256[]) private stakedNFT;
     mapping(uint256 => StatsInfo) private nftStats;
@@ -33,8 +34,17 @@ contract ShootingNFT is ERC721, IStaking {
         _;
     }
 
-    constructor(address roleContract, address managerContract)
-        ERC721("ShootingNFT", "SNFT")
+    modifier onlyRelayer() {
+        require(
+            IShootingRole(shootingRole).isRelayer(msg.sender),
+            "ShootingRole: only relayer"
+        );
+        _;
+    }
+
+    function initialize(address roleContract, address managerContract)
+        public
+        initializer
     {
         shootingRole = roleContract;
         shootingManager = managerContract;
@@ -47,7 +57,7 @@ contract ShootingNFT is ERC721, IStaking {
     function tokenURI(uint256 tokenId)
         public
         view
-        override(ERC721)
+        override
         returns (string memory)
     {
         return super.tokenURI(tokenId);
@@ -136,5 +146,13 @@ contract ShootingNFT is ERC721, IStaking {
         require(signer == _signer, "Invalid signer");
 
         return true;
+    }
+
+    function getShootingRole() public view returns (address) {
+        return shootingRole;
+    }
+
+    function getShootingManger() public view returns (address) {
+        return shootingManager;
     }
 }

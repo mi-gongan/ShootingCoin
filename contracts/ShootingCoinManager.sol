@@ -1,6 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+
 import "./ShootingRole.sol";
 import "./libs/GameCore.sol";
 import "./libs/CurrencyController.sol";
@@ -9,7 +11,12 @@ import "./interface/IShootingRole.sol";
 import "./interface/IStaking.sol";
 import "./interface/IShootingGame.sol";
 
-contract ShootingCoinManager is GameCore, CurrencyController, IShootingGame {
+contract ShootingCoinManager is
+    Initializable,
+    GameCore,
+    CurrencyController,
+    IShootingGame
+{
     event GameInited(
         uint256 gameId,
         address user1,
@@ -24,9 +31,8 @@ contract ShootingCoinManager is GameCore, CurrencyController, IShootingGame {
         GameHistory gameHistory
     );
 
-    constructor(address roleContract, address nftContract) {
+    function initialize(address roleContract) public initializer {
         shootingRole = roleContract;
-        shootingNft = nftContract;
     }
 
     function EnterGame(BetInfo memory userBetInfo, uint256 gameId) public {
@@ -162,6 +168,18 @@ contract ShootingCoinManager is GameCore, CurrencyController, IShootingGame {
             user2BetInfo.userAccount,
             _gameHistory
         );
+    }
+
+    function getGameInfo(uint256 gameId) public view returns (GameInfo memory) {
+        return gameInfo[gameId];
+    }
+
+    function getHistory(address userAccount)
+        public
+        view
+        returns (GameHistory[] memory)
+    {
+        return gameHistory[userAccount];
     }
 
     function checkOnGame(address userAccount) public view returns (uint256) {

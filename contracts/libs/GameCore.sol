@@ -27,7 +27,7 @@ contract GameCore {
 
     struct CoinInfo {
         address coinAddress;
-        uint256 amount;
+        uint40 amount;
     }
 
     struct GameInfo {

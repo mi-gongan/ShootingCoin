@@ -17,6 +17,8 @@ contract ShootingCoinManager is
     CurrencyController,
     IShootingGame
 {
+    event Entered(address user, uint256 gameId);
+
     event GameInited(
         uint256 gameId,
         address user1,
@@ -35,16 +37,16 @@ contract ShootingCoinManager is
         shootingRole = roleContract;
     }
 
-    function EnterGame(BetInfo memory userBetInfo, uint256 gameId) public {
+    function enterGame(BetInfo memory userBetInfo, uint256 gameId) public {
         require(userBetInfo.userAccount == msg.sender, "wrong user");
         if (IShootingRole(shootingRole).isRelayer(userBetInfo.userAccount))
             revert("relayer can't play");
         if (isOnGame[userBetInfo.userAccount] != 0) revert("user is on game");
 
-        require(
-            IStaking(shootingNft).isStake(userBetInfo.userAccount, gameId),
-            "not stake"
-        );
+        // require(
+        //     IStaking(shootingNft).isStake(userBetInfo.userAccount, gameId),
+        //     "not stake"
+        // );
 
         despositCoin(userBetInfo.coin1.coinAddress, userBetInfo.coin1.amount);
         despositCoin(userBetInfo.coin2.coinAddress, userBetInfo.coin2.amount);
@@ -69,6 +71,7 @@ contract ShootingCoinManager is
         ] += userBetInfo.coin5.amount;
 
         _enterGame(userBetInfo.userAccount, gameId);
+        emit Entered(userBetInfo.userAccount, gameId);
     }
 
     function startGame(

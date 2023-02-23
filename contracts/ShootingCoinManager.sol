@@ -8,16 +8,10 @@ import "./libs/GameCore.sol";
 import "./libs/CurrencyController.sol";
 
 import "./interface/IShootingRole.sol";
-import "./interface/IStaking.sol";
-import "./interface/IShootingGame.sol";
+import "./interface/IShootingNFT.sol";
 
-contract ShootingCoinManager is
-    Initializable,
-    GameCore,
-    CurrencyController,
-    IShootingGame
-{
-    event Entered(address user, uint256 gameId);
+contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
+    event Entered(address user, BetInfo betInfo);
 
     event GameInited(
         uint256 gameId,
@@ -37,54 +31,35 @@ contract ShootingCoinManager is
         shootingRole = roleContract;
     }
 
-    function enterGame(BetInfo memory userBetInfo, uint256 gameId) public {
-        require(userBetInfo.userAccount == msg.sender, "wrong user");
-        if (IShootingRole(shootingRole).isRelayer(userBetInfo.userAccount))
+    function enterGame(
+        address account,
+        BetInfo memory _betInfo,
+        uint256 nftSkinId
+    ) public {
+        require(account == msg.sender, "wrong user");
+        if (IShootingRole(shootingRole).isRelayer(account))
             revert("relayer can't play");
-        if (isOnGame[userBetInfo.userAccount] != 0) revert("user is on game");
+        if (isOnGame[account] == 1) revert("user is on game");
 
-        // require(
-        //     IStaking(shootingNft).isStake(userBetInfo.userAccount, gameId),
-        //     "not stake"
-        // );
+        IShootingNFT(shootingNft).stake(nftSkinId);
 
-        despositCoin(userBetInfo.coin1.coinAddress, userBetInfo.coin1.amount);
-        despositCoin(userBetInfo.coin2.coinAddress, userBetInfo.coin2.amount);
-        despositCoin(userBetInfo.coin3.coinAddress, userBetInfo.coin3.amount);
-        despositCoin(userBetInfo.coin4.coinAddress, userBetInfo.coin4.amount);
-        despositCoin(userBetInfo.coin5.coinAddress, userBetInfo.coin5.amount);
+        despositCoin(_betInfo.coinAddress, _betInfo.betAmount);
 
-        userBettingCoinBalance[userBetInfo.userAccount][
-            userBetInfo.coin1.coinAddress
-        ] += userBetInfo.coin1.amount;
-        userBettingCoinBalance[userBetInfo.userAccount][
-            userBetInfo.coin2.coinAddress
-        ] += userBetInfo.coin2.amount;
-        userBettingCoinBalance[userBetInfo.userAccount][
-            userBetInfo.coin3.coinAddress
-        ] += userBetInfo.coin3.amount;
-        userBettingCoinBalance[userBetInfo.userAccount][
-            userBetInfo.coin4.coinAddress
-        ] += userBetInfo.coin4.amount;
-        userBettingCoinBalance[userBetInfo.userAccount][
-            userBetInfo.coin5.coinAddress
-        ] += userBetInfo.coin5.amount;
-
-        _enterGame(userBetInfo.userAccount, gameId);
-        emit Entered(userBetInfo.userAccount, gameId);
+        _enterGame(account, _betInfo);
+        emit Entered(account, _betInfo);
     }
 
     function startGame(
         uint256 gameId,
         address user1,
-        address user2,
-        BetInfo memory user1BetInfo,
-        BetInfo memory user2BetInfo
+        address user2
     ) public onlyRelayer {
-        require(isOnGame[user1] == gameId, "not match game");
-        require(isOnGame[user2] == gameId, "not match game");
-
-        GameInfo memory _gameInfo = GameInfo(user1BetInfo, user2BetInfo);
+        GameInfo memory _gameInfo = GameInfo(
+            user1,
+            user2,
+            betInfo[user1],
+            betInfo[user2]
+        );
         gameInfo[gameId] = _gameInfo;
 
         emit GameInited(gameId, user1, user2, _gameInfo);
@@ -92,89 +67,50 @@ contract ShootingCoinManager is
 
     function settleGame(
         uint256 gameId,
-        uint8 user1GetCoinId,
-        uint8 user2GetCoinId
+        address user1,
+        address user2,
+        uint256 user1GetAmount,
+        uint256 user2GetAmount
     ) public payable onlyRelayer {
         BetInfo memory user1BetInfo = gameInfo[gameId].user1BetInfo;
         BetInfo memory user2BetInfo = gameInfo[gameId].user2BetInfo;
 
-        // user2가 user1에게 줄 코인들
-        if (user1GetCoinId & 1 == 1) {
-            userBettingCoinBalance[user1BetInfo.userAccount][
-                user2BetInfo.coin1.coinAddress
-            ] += user2BetInfo.coin1.amount;
-        }
-        if (user1GetCoinId & 2 == 2) {
-            userBettingCoinBalance[user1BetInfo.userAccount][
-                user2BetInfo.coin2.coinAddress
-            ] += user2BetInfo.coin2.amount;
-        }
-        if (user1GetCoinId & 4 == 4) {
-            userBettingCoinBalance[user1BetInfo.userAccount][
-                user2BetInfo.coin3.coinAddress
-            ] += user2BetInfo.coin3.amount;
-        }
-        if (user1GetCoinId & 8 == 8) {
-            userBettingCoinBalance[user1BetInfo.userAccount][
-                user2BetInfo.coin4.coinAddress
-            ] += user2BetInfo.coin4.amount;
-        }
-        if (user1GetCoinId & 16 == 16) {
-            userBettingCoinBalance[user1BetInfo.userAccount][
-                user2BetInfo.coin5.coinAddress
-            ] += user2BetInfo.coin5.amount;
-        }
-
-        // user1이 user2에게 줄 코인들
-        if (user2GetCoinId & 1 == 1) {
-            userBettingCoinBalance[user2BetInfo.userAccount][
-                user1BetInfo.coin1.coinAddress
-            ] += user1BetInfo.coin1.amount;
-        }
-        if (user2GetCoinId & 2 == 2) {
-            userBettingCoinBalance[user2BetInfo.userAccount][
-                user1BetInfo.coin2.coinAddress
-            ] += user1BetInfo.coin2.amount;
-        }
-        if (user2GetCoinId & 4 == 4) {
-            userBettingCoinBalance[user2BetInfo.userAccount][
-                user1BetInfo.coin3.coinAddress
-            ] += user1BetInfo.coin3.amount;
-        }
-        if (user2GetCoinId & 8 == 8) {
-            userBettingCoinBalance[user2BetInfo.userAccount][
-                user1BetInfo.coin4.coinAddress
-            ] += user1BetInfo.coin4.amount;
-        }
-        if (user2GetCoinId & 16 == 16) {
-            userBettingCoinBalance[user2BetInfo.userAccount][
-                user1BetInfo.coin5.coinAddress
-            ] += user1BetInfo.coin5.amount;
-        }
-
         GameHistory memory _gameHistory = GameHistory(
             gameId,
-            user1GetCoinId,
-            user2GetCoinId,
+            user1,
+            user2,
+            user1BetInfo,
+            user1GetAmount,
+            user2BetInfo,
+            user2GetAmount,
             uint240(block.timestamp)
         );
 
-        gameHistory[user1BetInfo.userAccount].push(_gameHistory);
-        gameHistory[user2BetInfo.userAccount].push(_gameHistory);
+        ditstributeCoin(user1, user2BetInfo.coinAddress, user1GetAmount);
+        ditstributeCoin(user2, user1BetInfo.coinAddress, user2GetAmount);
 
-        _endGame(user1BetInfo.userAccount);
-        _endGame(user2BetInfo.userAccount);
+        gameHistory[user1].push(_gameHistory);
+        gameHistory[user2].push(_gameHistory);
 
-        emit GameSettled(
-            gameId,
-            user1BetInfo.userAccount,
-            user2BetInfo.userAccount,
-            _gameHistory
-        );
+        IShootingNFT(shootingNft).unStake(user1BetInfo.nftSkinId);
+        IShootingNFT(shootingNft).unStake(user2BetInfo.nftSkinId);
+
+        _endGame(user1);
+        _endGame(user2);
+
+        emit GameSettled(gameId, user1, user2, _gameHistory);
     }
 
     function getGameInfo(uint256 gameId) public view returns (GameInfo memory) {
         return gameInfo[gameId];
+    }
+
+    function getBetInfo(address userAccount)
+        public
+        view
+        returns (BetInfo memory)
+    {
+        return betInfo[userAccount];
     }
 
     function getHistory(address userAccount)
@@ -183,9 +119,5 @@ contract ShootingCoinManager is
         returns (GameHistory[] memory)
     {
         return gameHistory[userAccount];
-    }
-
-    function checkOnGame(address userAccount) public view returns (uint256) {
-        return isOnGame[userAccount];
     }
 }

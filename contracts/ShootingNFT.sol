@@ -6,10 +6,8 @@ import "@openzeppelin/contracts/utils/cryptography/ECDSA.sol";
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
 
 import "./interface/IShootingRole.sol";
-import "./interface/IShootingGame.sol";
-import "./interface/IStaking.sol";
 
-contract ShootingNFT is ERC721EnumerableUpgradeable, IStaking {
+contract ShootingNFT is ERC721EnumerableUpgradeable {
     using ECDSA for bytes32;
 
     uint8 constant DEPENSE = 0;
@@ -18,7 +16,7 @@ contract ShootingNFT is ERC721EnumerableUpgradeable, IStaking {
     address public shootingRole;
     address public shootingManager;
 
-    mapping(address => uint256[]) private stakedNFT;
+    mapping(uint256 => uint256) private isStake;
     mapping(uint256 => StatsInfo) private nftStats;
 
     struct StatsInfo {
@@ -39,6 +37,11 @@ contract ShootingNFT is ERC721EnumerableUpgradeable, IStaking {
             IShootingRole(shootingRole).isRelayer(msg.sender),
             "ShootingRole: only relayer"
         );
+        _;
+    }
+
+    modifier onlyManager() {
+        require(msg.sender == shootingManager, "ShootingRole: only manager");
         _;
     }
 
@@ -72,80 +75,16 @@ contract ShootingNFT is ERC721EnumerableUpgradeable, IStaking {
         baseURI = afterBaseURI;
     }
 
-    function stakeNFT(uint256 tokenId, bytes memory userSignature) public {
-        require(verifyStake(msg.sender, userSignature));
-        require(
-            ownerOf(tokenId) == msg.sender,
-            "You are not the owner of this NFT"
-        );
-
-        stakedNFT[msg.sender].push(tokenId);
+    function stake(uint256 tokenId) public onlyManager {
+        isStake[tokenId] = 1;
     }
 
-    function unStakeNFT(uint256 tokenId, bytes memory userSignature) public {
-        require(verifyUnstake(msg.sender, userSignature));
-        require(
-            ownerOf(tokenId) == msg.sender,
-            "You are not the owner of this NFT"
-        );
-        require(
-            IShootingGame(shootingManager).checkOnGame(msg.sender) != 0,
-            "You are on the game"
-        );
-
-        delete stakedNFT[msg.sender][tokenId];
-    }
-
-    function isStake(address user, uint256 tokenId) public view returns (bool) {
-        uint256[] memory userStakedNFT = stakedNFT[user];
-
-        for (uint256 i = 0; i < userStakedNFT.length; i++) {
-            if (userStakedNFT[i] == tokenId) {
-                return true;
-            }
-        }
-
-        return false;
+    function unStake(uint256 tokenId) public onlyManager {
+        isStake[tokenId] = 0;
     }
 
     function getStat(uint256 tokenId) public view returns (uint8, uint88) {
         return (nftStats[tokenId].statType, nftStats[tokenId].value);
-    }
-
-    function verifyStake(address _signer, bytes memory _signature)
-        public
-        pure
-        returns (bool)
-    {
-        string memory message = "I agree to stake";
-
-        bytes32 origin = keccak256(
-            abi.encodePacked("\x19Ethereum Signed Message:\n32", message)
-        );
-
-        address signer = origin.recover(_signature);
-
-        require(signer == _signer, "Invalid signer");
-
-        return true;
-    }
-
-    function verifyUnstake(address _signer, bytes memory _signature)
-        public
-        pure
-        returns (bool)
-    {
-        string memory message = "I agree to unstake";
-
-        bytes32 origin = keccak256(
-            abi.encodePacked("\x19Ethereum Signed Message:\n36", message)
-        );
-
-        address signer = origin.recover(_signature);
-
-        require(signer == _signer, "Invalid signer");
-
-        return true;
     }
 
     function getShootingRole() public view returns (address) {
@@ -154,5 +93,16 @@ contract ShootingNFT is ERC721EnumerableUpgradeable, IStaking {
 
     function getShootingManger() public view returns (address) {
         return shootingManager;
+    }
+
+    function _beforeTokenTransfer(
+        address from,
+        address to,
+        uint256 tokenId
+    ) internal {
+        if (isStake[tokenId] != 0) {
+            revert("Staked NFT can't be transfered");
+        }
+        super._beforeTokenTransfer(from, to, tokenId, 0);
     }
 }

@@ -6,8 +6,9 @@ import "../interface/IShootingRole.sol";
 contract GameCore {
     address public shootingRole;
     address public shootingNft;
-    //user on game, user address => game id
     mapping(address => uint256) public isOnGame;
+    //user on game, user address => bet info
+    mapping(address => BetInfo) public betInfo;
 
     //game info
     mapping(uint256 => GameInfo) public gameInfo;
@@ -17,30 +18,26 @@ contract GameCore {
     mapping(address => bool) public whitelist;
 
     struct BetInfo {
-        address userAccount;
-        CoinInfo coin1;
-        CoinInfo coin2;
-        CoinInfo coin3;
-        CoinInfo coin4;
-        CoinInfo coin5;
-    }
-
-    struct CoinInfo {
         address coinAddress;
-        uint40 amount;
+        uint256 betAmount;
+        uint256 nftSkinId;
     }
 
     struct GameInfo {
+        address user1;
+        address user2;
         BetInfo user1BetInfo;
         BetInfo user2BetInfo;
     }
 
     struct GameHistory {
         uint256 gameId;
-        // digit 1: coin1, digit 2: coin2, digit 3: coin3, digit 4: coin4, digit 5: coin5
-        // if 1, get the coin of opponent
-        uint8 user1GetCoinId;
-        uint8 user2GetCoinId;
+        address user1;
+        address user2;
+        BetInfo user1BetInfo;
+        uint256 user1GetAmount;
+        BetInfo user2BetInfo;
+        uint256 user2GetAmount;
         uint240 timeStamp;
     }
 
@@ -76,11 +73,13 @@ contract GameCore {
         return shootingNft;
     }
 
-    function _enterGame(address userAccount, uint256 gameId) internal {
-        isOnGame[userAccount] = gameId;
+    function _enterGame(address userAccount, BetInfo memory _betInfo) internal {
+        betInfo[userAccount] = _betInfo;
+        isOnGame[userAccount] = 1;
     }
 
     function _endGame(address userAccount) internal {
+        delete betInfo[userAccount];
         isOnGame[userAccount] = 0;
     }
 }

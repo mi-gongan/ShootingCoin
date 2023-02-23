@@ -54,7 +54,7 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
     }
 
     function mint(address to, uint256 tokenId) public {
-        _safeMint(to, tokenId);
+        _mint(to, tokenId);
     }
 
     function tokenURI(uint256 tokenId)

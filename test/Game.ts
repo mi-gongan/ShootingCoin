@@ -1,6 +1,7 @@
 import { expect } from "chai";
 import { loadFixture } from "@nomicfoundation/hardhat-network-helpers";
 import { deploySetting } from "./helper/deploySetting";
+import { user1TokenId, user2TokenId } from "./helper/constant";
 
 describe("goods", async function () {
   it("deploy test", async function () {
@@ -26,38 +27,48 @@ describe("goods", async function () {
       account2,
       Mock1ERC20,
       Mock2ERC20,
-      Mock3ERC20,
-      Mock4ERC20,
-      Mock5ERC20,
+      relayer,
     } = await loadFixture(deploySetting);
-    const gameId = 1;
-    await ShootingCoinManager.connect(account1).enterGame(
-      [
-        account1.address,
-        [Mock1ERC20.address, 10],
-        [Mock2ERC20.address, 10],
-        [Mock3ERC20.address, 10],
-        [Mock4ERC20.address, 10],
-        [Mock5ERC20.address, 10],
-      ],
-      gameId
-    );
-    await ShootingCoinManager.connect(account2).enterGame(
-      [
-        account2.address,
-        [Mock1ERC20.address, 10],
-        [Mock2ERC20.address, 10],
-        [Mock3ERC20.address, 10],
-        [Mock4ERC20.address, 10],
-        [Mock5ERC20.address, 10],
-      ],
-      gameId
+    await ShootingCoinManager.connect(account1).enterGame(account1.address, [
+      Mock1ERC20.address,
+      100,
+      user1TokenId,
+    ]);
+    await ShootingCoinManager.connect(account2).enterGame(account2.address, [
+      Mock2ERC20.address,
+      100,
+      user2TokenId,
+    ]);
+
+    expect(await Mock1ERC20.balanceOf(ShootingCoinManager.address)).to.equal(
+      100
     );
     expect(await ShootingCoinManager.checkOnGame(account1.address)).to.equal(
-      gameId
+      true
+    );
+    expect(await Mock2ERC20.balanceOf(ShootingCoinManager.address)).to.equal(
+      100
     );
     expect(await ShootingCoinManager.checkOnGame(account2.address)).to.equal(
-      gameId
+      true
     );
+
+    await ShootingCoinManager.connect(relayer).startGame(
+      1,
+      account1.address,
+      account2.address
+    );
+    await ShootingCoinManager.connect(relayer).settleGame(
+      1,
+      account1.address,
+      account2.address,
+      10,
+      10
+    );
+
+    expect(await Mock1ERC20.balanceOf(account1.address)).to.deep.equal(0);
+    expect(await Mock2ERC20.balanceOf(account1.address)).to.deep.equal(10);
+    expect(await Mock2ERC20.balanceOf(account2.address)).to.deep.equal(0);
+    expect(await Mock1ERC20.balanceOf(account2.address)).to.deep.equal(10);
   });
 });

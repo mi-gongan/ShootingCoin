@@ -31,17 +31,13 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
         shootingRole = roleContract;
     }
 
-    function enterGame(
-        address account,
-        BetInfo memory _betInfo,
-        uint256 nftSkinId
-    ) public {
+    function enterGame(address account, BetInfo memory _betInfo) public {
         require(account == msg.sender, "wrong user");
         if (IShootingRole(shootingRole).isRelayer(account))
             revert("relayer can't play");
         if (isOnGame[account] == 1) revert("user is on game");
 
-        IShootingNFT(shootingNft).stake(nftSkinId);
+        IShootingNFT(shootingNft).stake(_betInfo.nftSkinId);
 
         despositCoin(_betInfo.coinAddress, _betInfo.betAmount);
 
@@ -119,5 +115,9 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
         returns (GameHistory[] memory)
     {
         return gameHistory[userAccount];
+    }
+
+    function checkOnGame(address account) public view returns (bool) {
+        return isOnGame[account] == 1;
     }
 }

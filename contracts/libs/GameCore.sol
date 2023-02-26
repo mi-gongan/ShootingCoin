@@ -33,10 +33,10 @@ contract GameCore {
     struct GameHistory {
         uint256 gameId;
         address user1;
-        address user2;
-        BetInfo user1BetInfo;
+        address user1coinAddress;
         uint256 user1GetAmount;
-        BetInfo user2BetInfo;
+        address user2;
+        address user2coinAddress;
         uint256 user2GetAmount;
         uint240 timeStamp;
     }

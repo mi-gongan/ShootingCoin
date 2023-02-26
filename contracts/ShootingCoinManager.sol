@@ -84,10 +84,10 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
         GameHistory memory _gameHistory = GameHistory(
             gameId,
             user1,
-            user2,
-            user1BetInfo,
+            user1BetInfo.coinAddress,
             user1GetAmount,
-            user2BetInfo,
+            user2,
+            user2BetInfo.coinAddress,
             user2GetAmount,
             uint240(block.timestamp)
         );

@@ -1,18 +1,34 @@
-import { ethers } from "hardhat";
+import { ethers, upgrades } from "hardhat";
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const ShootingRoleToken = await ethers.getContractFactory("ShootingRole");
+  const ShootingCoinManagerToken = await ethers.getContractFactory(
+    "ShootingCoinManager"
+  );
+  const ShootingNFTToken = await ethers.getContractFactory("ShootingNFT");
 
-  const lockedAmount = ethers.utils.parseEther("1");
+  const ShootingRole = await upgrades.deployProxy(ShootingRoleToken, []);
+  await ShootingRole.deployed();
 
-  const Lock = await ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  await ShootingRole.addRelayer(process.env.RELAYER_ADDRESS);
 
-  await lock.deployed();
+  const ShootingCoinManager = await upgrades.deployProxy(
+    ShootingCoinManagerToken,
+    [ShootingRole.address]
+  );
+  await ShootingCoinManager.deployed();
 
-  console.log(`Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`);
+  const ShootingNFT = await upgrades.deployProxy(ShootingNFTToken, [
+    ShootingRole.address,
+    ShootingCoinManager.address,
+  ]);
+  await ShootingNFT.deployed();
+
+  await ShootingCoinManager.updateShootingNft(ShootingNFT.address);
+
+  console.log("ShootingRole deployed to:", ShootingRole.address);
+  console.log("ShootingCoinManager deployed to:", ShootingCoinManager.address);
+  console.log("ShootingNFT deployed to:", ShootingNFT.address);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

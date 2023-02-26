@@ -1,13 +1,5 @@
-# Sample Hardhat Project
+# Shooting Coin
 
-This project demonstrates a basic Hardhat use case. It comes with a sample contract, a test for that contract, and a script that deploys that contract.
-
-Try running some of the following tasks:
-
-```shell
-npx hardhat help
-npx hardhat test
-REPORT_GAS=true npx hardhat test
-npx hardhat node
-npx hardhat run scripts/deploy.ts
-```
+ShootingRole deployed to: 0x82e405b7aBC1D332988F4117eb5E104fa7738B23
+ShootingCoinManager deployed to: 0xAd7a5D4F3535Da25EDF775b7A167819C1DAd3cc0
+ShootingNFT deployed to: 0x6Fc88Af4B9F6d3380E3Da703bc700D3dC0d86DBe

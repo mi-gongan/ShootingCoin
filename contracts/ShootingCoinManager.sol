@@ -2,6 +2,7 @@
 pragma solidity ^0.8.9;
 
 import "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol";
+import "@openzeppelin/contracts-upgradeable/token/ERC721/IERC721Upgradeable.sol";
 
 import "./ShootingRole.sol";
 import "./libs/GameCore.sol";
@@ -37,7 +38,16 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
             revert("relayer can't play");
         if (isOnGame[account] == 1) revert("user is on game");
 
-        IShootingNFT(shootingNft).stake(_betInfo.nftSkinId);
+        for (uint256 i = 0; i < _betInfo.nftSkinId.length; i++) {
+            if (_betInfo.nftSkinId[i] != 0) {
+                require(
+                    IERC721Upgradeable(shootingNft).ownerOf(
+                        _betInfo.nftSkinId[i]
+                    ) == msg.sender,
+                    "not owner"
+                );
+            }
+        }
 
         despositCoin(_betInfo.coinAddress, _betInfo.betAmount);
 
@@ -87,9 +97,6 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
 
         gameHistory[user1].push(_gameHistory);
         gameHistory[user2].push(_gameHistory);
-
-        IShootingNFT(shootingNft).unStake(user1BetInfo.nftSkinId);
-        IShootingNFT(shootingNft).unStake(user2BetInfo.nftSkinId);
 
         _endGame(user1);
         _endGame(user2);

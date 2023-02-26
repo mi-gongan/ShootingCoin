@@ -32,12 +32,12 @@ describe("goods", async function () {
     await ShootingCoinManager.connect(account1).enterGame(account1.address, [
       Mock1ERC20.address,
       100,
-      user1TokenId,
+      [user1TokenId, 0, 0, 0, 0],
     ]);
     await ShootingCoinManager.connect(account2).enterGame(account2.address, [
       Mock2ERC20.address,
       100,
-      user2TokenId,
+      [user2TokenId, 0, 0, 0, 0],
     ]);
 
     expect(await Mock1ERC20.balanceOf(ShootingCoinManager.address)).to.equal(

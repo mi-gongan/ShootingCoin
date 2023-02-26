@@ -20,7 +20,7 @@ contract GameCore {
     struct BetInfo {
         address coinAddress;
         uint256 betAmount;
-        uint256 nftSkinId;
+        uint256[5] nftSkinId;
     }
 
     struct GameInfo {

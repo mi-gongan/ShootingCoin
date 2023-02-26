@@ -16,7 +16,6 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
     address public shootingRole;
     address public shootingManager;
 
-    mapping(uint256 => uint256) private isStake;
     mapping(uint256 => StatsInfo) private nftStats;
 
     struct StatsInfo {
@@ -70,17 +69,8 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
         return baseURI;
     }
 
-    //ownable 필요
     function setBaseURI(string memory afterBaseURI) public onlyAdmin {
         baseURI = afterBaseURI;
-    }
-
-    function stake(uint256 tokenId) public onlyManager {
-        isStake[tokenId] = 1;
-    }
-
-    function unStake(uint256 tokenId) public onlyManager {
-        isStake[tokenId] = 0;
     }
 
     function getStat(uint256 tokenId) public view returns (uint8, uint88) {
@@ -100,9 +90,6 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
         address to,
         uint256 tokenId
     ) internal {
-        if (isStake[tokenId] != 0) {
-            revert("Staked NFT can't be transfered");
-        }
         super._beforeTokenTransfer(from, to, tokenId, 0);
     }
 }

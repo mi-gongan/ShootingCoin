@@ -52,7 +52,7 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
         shootingManager = managerContract;
     }
 
-    function mint(address to, uint256 tokenId) public onlyManager {
+    function mint(address to, uint256 tokenId) public onlyAdmin {
         _mint(to, tokenId);
     }
 

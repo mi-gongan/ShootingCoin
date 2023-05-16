@@ -29,16 +29,18 @@ describe("goods", async function () {
       Mock2ERC20,
       relayer,
     } = await loadFixture(deploySetting);
-    await ShootingCoinManager.connect(account1).enterGame(account1.address, [
-      Mock1ERC20.address,
-      100,
-      [user1TokenId, 0, 0, 0, 0],
-    ]);
-    await ShootingCoinManager.connect(account2).enterGame(account2.address, [
-      Mock2ERC20.address,
-      100,
-      [user2TokenId, 0, 0, 0, 0],
-    ]);
+    const salt1 = 1;
+    await ShootingCoinManager.connect(account1).enterGame(
+      account1.address,
+      [Mock1ERC20.address, 100, [user1TokenId, 0, 0, 0, 0]],
+      salt1
+    );
+    const salt2 = 2;
+    await ShootingCoinManager.connect(account2).enterGame(
+      account2.address,
+      [Mock2ERC20.address, 100, [user2TokenId, 0, 0, 0, 0]],
+      salt2
+    );
 
     expect(await Mock1ERC20.balanceOf(ShootingCoinManager.address)).to.equal(
       100

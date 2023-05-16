@@ -15,6 +15,8 @@ Test STC deployed to : 0x2B82C160Fc42fB1F9da067164c838b41f4D541cB
 
 ## 호출 function : 주로 coinManager과 상호작용
 
+: 테스트 코드를 보면 플로우를 알 수 있음
+
 - enterGame
   : account와 BetInfo(BetInfoStruct 참고),salt(랜덤값)를 입력
   => 돈 입금, 대기열 상태

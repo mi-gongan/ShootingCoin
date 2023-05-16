@@ -19,6 +19,7 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
     mapping(uint256 => StatsInfo) private nftStats;
 
     struct StatsInfo {
+        // 0: defense, 1: attack
         uint8 statType;
         uint88 value;
     }
@@ -52,8 +53,15 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
         shootingManager = managerContract;
     }
 
-    function mint(address to, uint256 tokenId) public onlyAdmin {
+    function mint(
+        address to,
+        uint256 tokenId,
+        uint8 statType,
+        uint88 value
+    ) public onlyAdmin {
         _mint(to, tokenId);
+        nftStats[tokenId].statType = statType;
+        nftStats[tokenId].value = value;
     }
 
     function tokenURI(

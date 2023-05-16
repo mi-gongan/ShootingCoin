@@ -38,7 +38,7 @@ export interface ShootingNFTInterface extends utils.Interface {
     "getStat(uint256)": FunctionFragment;
     "initialize(address,address)": FunctionFragment;
     "isApprovedForAll(address,address)": FunctionFragment;
-    "mint(address,uint256)": FunctionFragment;
+    "mint(address,uint256,uint8,uint88)": FunctionFragment;
     "name()": FunctionFragment;
     "ownerOf(uint256)": FunctionFragment;
     "safeTransferFrom(address,address,uint256)": FunctionFragment;
@@ -120,7 +120,12 @@ export interface ShootingNFTInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "mint",
-    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+    values: [
+      PromiseOrValue<string>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(functionFragment: "name", values?: undefined): string;
   encodeFunctionData(
@@ -383,6 +388,8 @@ export interface ShootingNFT extends BaseContract {
     mint(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
+      statType: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -498,6 +505,8 @@ export interface ShootingNFT extends BaseContract {
   mint(
     to: PromiseOrValue<string>,
     tokenId: PromiseOrValue<BigNumberish>,
+    statType: PromiseOrValue<BigNumberish>,
+    value: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -613,6 +622,8 @@ export interface ShootingNFT extends BaseContract {
     mint(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
+      statType: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -767,6 +778,8 @@ export interface ShootingNFT extends BaseContract {
     mint(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
+      statType: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -883,6 +896,8 @@ export interface ShootingNFT extends BaseContract {
     mint(
       to: PromiseOrValue<string>,
       tokenId: PromiseOrValue<BigNumberish>,
+      statType: PromiseOrValue<BigNumberish>,
+      value: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 

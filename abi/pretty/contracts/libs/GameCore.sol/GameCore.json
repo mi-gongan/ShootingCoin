@@ -1,0 +1,14 @@
+[
+  "function betInfo(address) view returns (address, uint256)",
+  "function feeRecieveAddress() view returns (address)",
+  "function gameHistory(address,uint256) view returns (uint256, address, address, uint256, address, address, uint256, uint240)",
+  "function gameInfo(uint256) view returns (address, address, tuple(address,uint256,uint256[5]), tuple(address,uint256,uint256[5]))",
+  "function getShootingNft() view returns (address)",
+  "function getShootingRole() view returns (address)",
+  "function isOnGame(address) view returns (uint256)",
+  "function shootingNft() view returns (address)",
+  "function shootingRole() view returns (address)",
+  "function updateShootingNft(address)",
+  "function updateShootingRole(address)",
+  "function whitelist(address) view returns (bool)"
+]

@@ -1,0 +1,6 @@
+[
+  "function addRelayer(address)",
+  "function isAdmin(address) returns (bool)",
+  "function isRelayer(address) returns (bool)",
+  "function removeRelayer(address)"
+]

@@ -26,19 +26,27 @@ import type {
 export interface CurrencyControllerInterface extends utils.Interface {
   functions: {
     "despositCoin(address,uint256)": FunctionFragment;
+    "whitelist(address)": FunctionFragment;
   };
 
-  getFunction(nameOrSignatureOrTopic: "despositCoin"): FunctionFragment;
+  getFunction(
+    nameOrSignatureOrTopic: "despositCoin" | "whitelist"
+  ): FunctionFragment;
 
   encodeFunctionData(
     functionFragment: "despositCoin",
     values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "whitelist",
+    values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(
     functionFragment: "despositCoin",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(functionFragment: "whitelist", data: BytesLike): Result;
 
   events: {};
 }
@@ -75,6 +83,11 @@ export interface CurrencyController extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
+
+    whitelist(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<[boolean]>;
   };
 
   despositCoin(
@@ -83,12 +96,22 @@ export interface CurrencyController extends BaseContract {
     overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  whitelist(
+    arg0: PromiseOrValue<string>,
+    overrides?: CallOverrides
+  ): Promise<boolean>;
+
   callStatic: {
     despositCoin(
       coinAddress: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
+
+    whitelist(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<boolean>;
   };
 
   filters: {};
@@ -99,6 +122,11 @@ export interface CurrencyController extends BaseContract {
       amount: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
+
+    whitelist(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
   };
 
   populateTransaction: {
@@ -106,6 +134,11 @@ export interface CurrencyController extends BaseContract {
       coinAddress: PromiseOrValue<string>,
       amount: PromiseOrValue<BigNumberish>,
       overrides?: PayableOverrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    whitelist(
+      arg0: PromiseOrValue<string>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };
 }

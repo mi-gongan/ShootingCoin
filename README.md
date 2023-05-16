@@ -1,8 +1,8 @@
 # Shooting Coin
 
-ShootingRole deployed to: 0xaA34dA0C9fFdB0D1B015fd02B451eA2377eB863B
-ShootingCoinManager deployed to: 0x2149858836b33B629aB54Ded8468F3C6D5907018
-ShootingNFT deployed to: 0x56003f01b0227329A47F4b2AEB91BEE7c95F594F
+ShootingRole deployed to: 0xa78f62a91c7872dc3151529739e309cdf6aED887
+ShootingCoinManager deployed to: 0xCDf246E0060c3B2A68C182b2898EBa02147F4b27
+ShootingNFT deployed to: 0xe30809a17107765fdE4A2767D9cD3D7Ce0b23B0b
 Test STC deployed to : 0x2B82C160Fc42fB1F9da067164c838b41f4D541cB
 
 ## abi

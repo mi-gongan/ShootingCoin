@@ -60,9 +60,7 @@ export interface GameCoreInterface extends utils.Interface {
     "shootingRole()": FunctionFragment;
     "updateShootingNft(address)": FunctionFragment;
     "updateShootingRole(address)": FunctionFragment;
-    "updateWhiteList(address,bool)": FunctionFragment;
     "usedSalt(uint256)": FunctionFragment;
-    "whitelist(address)": FunctionFragment;
   };
 
   getFunction(
@@ -78,9 +76,7 @@ export interface GameCoreInterface extends utils.Interface {
       | "shootingRole"
       | "updateShootingNft"
       | "updateShootingRole"
-      | "updateWhiteList"
       | "usedSalt"
-      | "whitelist"
   ): FunctionFragment;
 
   encodeFunctionData(
@@ -128,16 +124,8 @@ export interface GameCoreInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
-    functionFragment: "updateWhiteList",
-    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
-  ): string;
-  encodeFunctionData(
     functionFragment: "usedSalt",
     values: [PromiseOrValue<BigNumberish>]
-  ): string;
-  encodeFunctionData(
-    functionFragment: "whitelist",
-    values: [PromiseOrValue<string>]
   ): string;
 
   decodeFunctionResult(functionFragment: "betInfo", data: BytesLike): Result;
@@ -175,12 +163,7 @@ export interface GameCoreInterface extends utils.Interface {
     functionFragment: "updateShootingRole",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(
-    functionFragment: "updateWhiteList",
-    data: BytesLike
-  ): Result;
   decodeFunctionResult(functionFragment: "usedSalt", data: BytesLike): Result;
-  decodeFunctionResult(functionFragment: "whitelist", data: BytesLike): Result;
 
   events: {};
 }
@@ -287,21 +270,10 @@ export interface GameCore extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
-    updateWhiteList(
-      coinAddress: PromiseOrValue<string>,
-      isWhite: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<ContractTransaction>;
-
     usedSalt(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
-
-    whitelist(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<[boolean]>;
   };
 
   betInfo(
@@ -379,21 +351,10 @@ export interface GameCore extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
-  updateWhiteList(
-    coinAddress: PromiseOrValue<string>,
-    isWhite: PromiseOrValue<boolean>,
-    overrides?: Overrides & { from?: PromiseOrValue<string> }
-  ): Promise<ContractTransaction>;
-
   usedSalt(
     arg0: PromiseOrValue<BigNumberish>,
     overrides?: CallOverrides
   ): Promise<BigNumber>;
-
-  whitelist(
-    arg0: PromiseOrValue<string>,
-    overrides?: CallOverrides
-  ): Promise<boolean>;
 
   callStatic: {
     betInfo(
@@ -471,21 +432,10 @@ export interface GameCore extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
-    updateWhiteList(
-      coinAddress: PromiseOrValue<string>,
-      isWhite: PromiseOrValue<boolean>,
-      overrides?: CallOverrides
-    ): Promise<void>;
-
     usedSalt(
       arg0: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
-
-    whitelist(
-      arg0: PromiseOrValue<string>,
-      overrides?: CallOverrides
-    ): Promise<boolean>;
   };
 
   filters: {};
@@ -532,19 +482,8 @@ export interface GameCore extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
-    updateWhiteList(
-      coinAddress: PromiseOrValue<string>,
-      isWhite: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<BigNumber>;
-
     usedSalt(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<BigNumber>;
-
-    whitelist(
-      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<BigNumber>;
   };
@@ -591,19 +530,8 @@ export interface GameCore extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
-    updateWhiteList(
-      coinAddress: PromiseOrValue<string>,
-      isWhite: PromiseOrValue<boolean>,
-      overrides?: Overrides & { from?: PromiseOrValue<string> }
-    ): Promise<PopulatedTransaction>;
-
     usedSalt(
       arg0: PromiseOrValue<BigNumberish>,
-      overrides?: CallOverrides
-    ): Promise<PopulatedTransaction>;
-
-    whitelist(
-      arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
   };

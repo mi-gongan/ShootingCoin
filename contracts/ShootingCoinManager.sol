@@ -168,6 +168,13 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
         return isOnGame[account] == 1;
     }
 
+    function updateWhiteList(
+        address coinAddress,
+        bool isWhite
+    ) public onlyAdmin {
+        whitelist[coinAddress] = isWhite;
+    }
+
     receive() external payable {}
 
     uint256[50] private __gap;

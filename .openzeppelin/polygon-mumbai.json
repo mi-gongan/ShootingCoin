@@ -79,6 +79,21 @@
       "address": "0x56003f01b0227329A47F4b2AEB91BEE7c95F594F",
       "txHash": "0x6510054c7cb56e6a8cd39319cabe90b5dd64aaee6102516c8b1dd6e8625bbe78",
       "kind": "transparent"
+    },
+    {
+      "address": "0xa78f62a91c7872dc3151529739e309cdf6aED887",
+      "txHash": "0xfb9f76a55c564a36a8b3f8637c43b02012f929953061e7e650627bc7bdbea0cd",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xCDf246E0060c3B2A68C182b2898EBa02147F4b27",
+      "txHash": "0xd66ea0083030bbbfe5356be7192de9f4d546a9b80b7c803be660bddcc0ec6a4b",
+      "kind": "transparent"
+    },
+    {
+      "address": "0xe30809a17107765fdE4A2767D9cD3D7Ce0b23B0b",
+      "txHash": "0x36e848b917bf53ac36ed5747e0962d7a95d4178d89bccf145bd054f2d18ad720",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -2340,6 +2355,310 @@
           "t_uint88": {
             "label": "uint88",
             "numberOfBytes": "11"
+          }
+        }
+      }
+    },
+    "d310566b5bb83f1d6a478b90a1c915618216da1a188204dcfd8f6199fe40ecf7": {
+      "address": "0xd4B0A3e25397263a8d491BaE5137e87039f04550",
+      "txHash": "0x9cbad70a6f3f1306008fad8f377787add68d8321b984d4f9c415735348bfa260",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "shootingRole",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:7"
+          },
+          {
+            "label": "shootingNft",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:8"
+          },
+          {
+            "label": "feeRecieveAddress",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:9"
+          },
+          {
+            "label": "isOnGame",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:10"
+          },
+          {
+            "label": "betInfo",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_struct(BetInfo)2968_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:12"
+          },
+          {
+            "label": "gameInfo",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_struct(GameInfo)2979_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:15"
+          },
+          {
+            "label": "gameHistory",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_array(t_struct(GameHistory)2996_storage)dyn_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:17"
+          },
+          {
+            "label": "usedSalt",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:19"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_array(t_uint256)42_storage",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:87"
+          },
+          {
+            "label": "gameFeePercent",
+            "offset": 0,
+            "slot": "50",
+            "type": "t_uint256",
+            "contract": "CurrencyController",
+            "src": "contracts/libs/CurrencyController.sol:8"
+          },
+          {
+            "label": "whitelist",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "CurrencyController",
+            "src": "contracts/libs/CurrencyController.sol:9"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "52",
+            "type": "t_array(t_uint256)47_storage",
+            "contract": "CurrencyController",
+            "src": "contracts/libs/CurrencyController.sol:31"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "99",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ShootingCoinManager",
+            "src": "contracts/ShootingCoinManager.sol:180"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_struct(GameHistory)2996_storage)dyn_storage": {
+            "label": "struct GameCore.GameHistory[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)42_storage": {
+            "label": "uint256[42]",
+            "numberOfBytes": "1344"
+          },
+          "t_array(t_uint256)47_storage": {
+            "label": "uint256[47]",
+            "numberOfBytes": "1504"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)5_storage": {
+            "label": "uint256[5]",
+            "numberOfBytes": "160"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_struct(GameHistory)2996_storage)dyn_storage)": {
+            "label": "mapping(address => struct GameCore.GameHistory[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(BetInfo)2968_storage)": {
+            "label": "mapping(address => struct GameCore.BetInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(GameInfo)2979_storage)": {
+            "label": "mapping(uint256 => struct GameCore.GameInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(BetInfo)2968_storage": {
+            "label": "struct GameCore.BetInfo",
+            "members": [
+              {
+                "label": "coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "betAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "nftSkinId",
+                "type": "t_array(t_uint256)5_storage",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_struct(GameHistory)2996_storage": {
+            "label": "struct GameCore.GameHistory",
+            "members": [
+              {
+                "label": "gameId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "user1",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "user1coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "user1GetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "user2",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "user2coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "user2GetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "timeStamp",
+                "type": "t_uint240",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_struct(GameInfo)2979_storage": {
+            "label": "struct GameCore.GameInfo",
+            "members": [
+              {
+                "label": "user1",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "user2",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "user1BetInfo",
+                "type": "t_struct(BetInfo)2968_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "user2BetInfo",
+                "type": "t_struct(BetInfo)2968_storage",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "512"
+          },
+          "t_uint240": {
+            "label": "uint240",
+            "numberOfBytes": "30"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
           }
         }
       }

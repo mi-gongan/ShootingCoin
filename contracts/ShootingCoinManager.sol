@@ -12,7 +12,9 @@ import "./interface/IShootingRole.sol";
 import "./interface/IShootingNFT.sol";
 
 contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
-    event Entered(address user, BetInfo betInfo);
+    event Entered(address user, BetInfo betInfo, uint256 salt);
+
+    event Quited(address user, BetInfo betInfo, uint256 salt);
 
     event GameInited(
         uint256 indexed gameId,
@@ -38,7 +40,12 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
         feeRecieveAddress = _feeRecieveAddress;
     }
 
-    function enterGame(address account, BetInfo memory _betInfo) public {
+    function enterGame(
+        address account,
+        BetInfo memory _betInfo,
+        uint256 salt
+    ) public {
+        require(usedSalt[salt] == 0, "salt used");
         require(account == msg.sender, "wrong user");
         if (IShootingRole(shootingRole).isRelayer(account))
             revert("relayer can't play");
@@ -58,7 +65,20 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
         despositCoin(_betInfo.coinAddress, _betInfo.betAmount);
 
         _enterGame(account, _betInfo);
-        emit Entered(account, _betInfo);
+
+        usedSalt[salt] = 1;
+        emit Entered(account, _betInfo, salt);
+    }
+
+    function quitGame(address account, uint256 salt) public {
+        require(usedSalt[salt] == 1, "not used salt");
+        require(account == msg.sender, "wrong user");
+        if (isOnGame[account] == 0) revert("user is not on game");
+
+        BetInfo memory _betInfo = betInfo[account];
+
+        ditstributeCoin(account, _betInfo.coinAddress, _betInfo.betAmount);
+        emit Quited(account, _betInfo, salt);
     }
 
     function startGame(
@@ -149,4 +169,6 @@ contract ShootingCoinManager is Initializable, GameCore, CurrencyController {
     }
 
     receive() external payable {}
+
+    uint256[50] private __gap;
 }

@@ -7,3 +7,4 @@ export * as mock from "./mock";
 export { ShootingCoinManager__factory } from "./ShootingCoinManager__factory";
 export { ShootingNFT__factory } from "./ShootingNFT__factory";
 export { ShootingRole__factory } from "./ShootingRole__factory";
+export { TestShootingCoin__factory } from "./TestShootingCoin__factory";

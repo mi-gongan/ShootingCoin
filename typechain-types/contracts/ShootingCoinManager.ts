@@ -107,7 +107,7 @@ export interface ShootingCoinManagerInterface extends utils.Interface {
     "betInfo(address)": FunctionFragment;
     "checkOnGame(address)": FunctionFragment;
     "despositCoin(address,uint256)": FunctionFragment;
-    "enterGame(address,(address,uint256,uint256[5]))": FunctionFragment;
+    "enterGame(address,(address,uint256,uint256[5]),uint256)": FunctionFragment;
     "feeRecieveAddress()": FunctionFragment;
     "gameHistory(address,uint256)": FunctionFragment;
     "gameInfo(uint256)": FunctionFragment;
@@ -118,12 +118,15 @@ export interface ShootingCoinManagerInterface extends utils.Interface {
     "getShootingRole()": FunctionFragment;
     "initialize(address,uint256,address)": FunctionFragment;
     "isOnGame(address)": FunctionFragment;
+    "quitGame(address,uint256)": FunctionFragment;
     "settleGame(uint256,address,address,uint256,uint256)": FunctionFragment;
     "shootingNft()": FunctionFragment;
     "shootingRole()": FunctionFragment;
     "startGame(uint256,address,address)": FunctionFragment;
     "updateShootingNft(address)": FunctionFragment;
     "updateShootingRole(address)": FunctionFragment;
+    "updateWhiteList(address,bool)": FunctionFragment;
+    "usedSalt(uint256)": FunctionFragment;
     "whitelist(address)": FunctionFragment;
   };
 
@@ -143,12 +146,15 @@ export interface ShootingCoinManagerInterface extends utils.Interface {
       | "getShootingRole"
       | "initialize"
       | "isOnGame"
+      | "quitGame"
       | "settleGame"
       | "shootingNft"
       | "shootingRole"
       | "startGame"
       | "updateShootingNft"
       | "updateShootingRole"
+      | "updateWhiteList"
+      | "usedSalt"
       | "whitelist"
   ): FunctionFragment;
 
@@ -166,7 +172,11 @@ export interface ShootingCoinManagerInterface extends utils.Interface {
   ): string;
   encodeFunctionData(
     functionFragment: "enterGame",
-    values: [PromiseOrValue<string>, GameCore.BetInfoStruct]
+    values: [
+      PromiseOrValue<string>,
+      GameCore.BetInfoStruct,
+      PromiseOrValue<BigNumberish>
+    ]
   ): string;
   encodeFunctionData(
     functionFragment: "feeRecieveAddress",
@@ -213,6 +223,10 @@ export interface ShootingCoinManagerInterface extends utils.Interface {
     values: [PromiseOrValue<string>]
   ): string;
   encodeFunctionData(
+    functionFragment: "quitGame",
+    values: [PromiseOrValue<string>, PromiseOrValue<BigNumberish>]
+  ): string;
+  encodeFunctionData(
     functionFragment: "settleGame",
     values: [
       PromiseOrValue<BigNumberish>,
@@ -245,6 +259,14 @@ export interface ShootingCoinManagerInterface extends utils.Interface {
   encodeFunctionData(
     functionFragment: "updateShootingRole",
     values: [PromiseOrValue<string>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "updateWhiteList",
+    values: [PromiseOrValue<string>, PromiseOrValue<boolean>]
+  ): string;
+  encodeFunctionData(
+    functionFragment: "usedSalt",
+    values: [PromiseOrValue<BigNumberish>]
   ): string;
   encodeFunctionData(
     functionFragment: "whitelist",
@@ -286,6 +308,7 @@ export interface ShootingCoinManagerInterface extends utils.Interface {
   ): Result;
   decodeFunctionResult(functionFragment: "initialize", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "isOnGame", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "quitGame", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "settleGame", data: BytesLike): Result;
   decodeFunctionResult(
     functionFragment: "shootingNft",
@@ -304,27 +327,35 @@ export interface ShootingCoinManagerInterface extends utils.Interface {
     functionFragment: "updateShootingRole",
     data: BytesLike
   ): Result;
+  decodeFunctionResult(
+    functionFragment: "updateWhiteList",
+    data: BytesLike
+  ): Result;
+  decodeFunctionResult(functionFragment: "usedSalt", data: BytesLike): Result;
   decodeFunctionResult(functionFragment: "whitelist", data: BytesLike): Result;
 
   events: {
-    "Entered(address,tuple)": EventFragment;
+    "Entered(address,tuple,uint256)": EventFragment;
     "GameInited(uint256,address,address,tuple)": EventFragment;
     "GameSettled(uint256,address,address,tuple)": EventFragment;
     "Initialized(uint8)": EventFragment;
+    "Quited(address,tuple,uint256)": EventFragment;
   };
 
   getEvent(nameOrSignatureOrTopic: "Entered"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GameInited"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "GameSettled"): EventFragment;
   getEvent(nameOrSignatureOrTopic: "Initialized"): EventFragment;
+  getEvent(nameOrSignatureOrTopic: "Quited"): EventFragment;
 }
 
 export interface EnteredEventObject {
   user: string;
   betInfo: GameCore.BetInfoStructOutput;
+  salt: BigNumber;
 }
 export type EnteredEvent = TypedEvent<
-  [string, GameCore.BetInfoStructOutput],
+  [string, GameCore.BetInfoStructOutput, BigNumber],
   EnteredEventObject
 >;
 
@@ -362,6 +393,18 @@ export interface InitializedEventObject {
 export type InitializedEvent = TypedEvent<[number], InitializedEventObject>;
 
 export type InitializedEventFilter = TypedEventFilter<InitializedEvent>;
+
+export interface QuitedEventObject {
+  user: string;
+  betInfo: GameCore.BetInfoStructOutput;
+  salt: BigNumber;
+}
+export type QuitedEvent = TypedEvent<
+  [string, GameCore.BetInfoStructOutput, BigNumber],
+  QuitedEventObject
+>;
+
+export type QuitedEventFilter = TypedEventFilter<QuitedEvent>;
 
 export interface ShootingCoinManager extends BaseContract {
   connect(signerOrProvider: Signer | Provider | string): this;
@@ -411,6 +454,7 @@ export interface ShootingCoinManager extends BaseContract {
     enterGame(
       account: PromiseOrValue<string>,
       _betInfo: GameCore.BetInfoStruct,
+      salt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
@@ -490,6 +534,12 @@ export interface ShootingCoinManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<[BigNumber]>;
 
+    quitGame(
+      account: PromiseOrValue<string>,
+      salt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
     settleGame(
       gameId: PromiseOrValue<BigNumberish>,
       user1: PromiseOrValue<string>,
@@ -520,6 +570,17 @@ export interface ShootingCoinManager extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<ContractTransaction>;
 
+    updateWhiteList(
+      coinAddress: PromiseOrValue<string>,
+      isWhite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<ContractTransaction>;
+
+    usedSalt(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<[BigNumber]>;
+
     whitelist(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -547,6 +608,7 @@ export interface ShootingCoinManager extends BaseContract {
   enterGame(
     account: PromiseOrValue<string>,
     _betInfo: GameCore.BetInfoStruct,
+    salt: PromiseOrValue<BigNumberish>,
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
@@ -626,6 +688,12 @@ export interface ShootingCoinManager extends BaseContract {
     overrides?: CallOverrides
   ): Promise<BigNumber>;
 
+  quitGame(
+    account: PromiseOrValue<string>,
+    salt: PromiseOrValue<BigNumberish>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
   settleGame(
     gameId: PromiseOrValue<BigNumberish>,
     user1: PromiseOrValue<string>,
@@ -656,6 +724,17 @@ export interface ShootingCoinManager extends BaseContract {
     overrides?: Overrides & { from?: PromiseOrValue<string> }
   ): Promise<ContractTransaction>;
 
+  updateWhiteList(
+    coinAddress: PromiseOrValue<string>,
+    isWhite: PromiseOrValue<boolean>,
+    overrides?: Overrides & { from?: PromiseOrValue<string> }
+  ): Promise<ContractTransaction>;
+
+  usedSalt(
+    arg0: PromiseOrValue<BigNumberish>,
+    overrides?: CallOverrides
+  ): Promise<BigNumber>;
+
   whitelist(
     arg0: PromiseOrValue<string>,
     overrides?: CallOverrides
@@ -683,6 +762,7 @@ export interface ShootingCoinManager extends BaseContract {
     enterGame(
       account: PromiseOrValue<string>,
       _betInfo: GameCore.BetInfoStruct,
+      salt: PromiseOrValue<BigNumberish>,
       overrides?: CallOverrides
     ): Promise<void>;
 
@@ -762,6 +842,12 @@ export interface ShootingCoinManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    quitGame(
+      account: PromiseOrValue<string>,
+      salt: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
     settleGame(
       gameId: PromiseOrValue<BigNumberish>,
       user1: PromiseOrValue<string>,
@@ -792,6 +878,17 @@ export interface ShootingCoinManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<void>;
 
+    updateWhiteList(
+      coinAddress: PromiseOrValue<string>,
+      isWhite: PromiseOrValue<boolean>,
+      overrides?: CallOverrides
+    ): Promise<void>;
+
+    usedSalt(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     whitelist(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -799,8 +896,12 @@ export interface ShootingCoinManager extends BaseContract {
   };
 
   filters: {
-    "Entered(address,tuple)"(user?: null, betInfo?: null): EnteredEventFilter;
-    Entered(user?: null, betInfo?: null): EnteredEventFilter;
+    "Entered(address,tuple,uint256)"(
+      user?: null,
+      betInfo?: null,
+      salt?: null
+    ): EnteredEventFilter;
+    Entered(user?: null, betInfo?: null, salt?: null): EnteredEventFilter;
 
     "GameInited(uint256,address,address,tuple)"(
       gameId?: PromiseOrValue<BigNumberish> | null,
@@ -830,6 +931,13 @@ export interface ShootingCoinManager extends BaseContract {
 
     "Initialized(uint8)"(version?: null): InitializedEventFilter;
     Initialized(version?: null): InitializedEventFilter;
+
+    "Quited(address,tuple,uint256)"(
+      user?: null,
+      betInfo?: null,
+      salt?: null
+    ): QuitedEventFilter;
+    Quited(user?: null, betInfo?: null, salt?: null): QuitedEventFilter;
   };
 
   estimateGas: {
@@ -852,6 +960,7 @@ export interface ShootingCoinManager extends BaseContract {
     enterGame(
       account: PromiseOrValue<string>,
       _betInfo: GameCore.BetInfoStruct,
+      salt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
@@ -899,6 +1008,12 @@ export interface ShootingCoinManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<BigNumber>;
 
+    quitGame(
+      account: PromiseOrValue<string>,
+      salt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
     settleGame(
       gameId: PromiseOrValue<BigNumberish>,
       user1: PromiseOrValue<string>,
@@ -929,6 +1044,17 @@ export interface ShootingCoinManager extends BaseContract {
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<BigNumber>;
 
+    updateWhiteList(
+      coinAddress: PromiseOrValue<string>,
+      isWhite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<BigNumber>;
+
+    usedSalt(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
+    ): Promise<BigNumber>;
+
     whitelist(
       arg0: PromiseOrValue<string>,
       overrides?: CallOverrides
@@ -955,6 +1081,7 @@ export interface ShootingCoinManager extends BaseContract {
     enterGame(
       account: PromiseOrValue<string>,
       _betInfo: GameCore.BetInfoStruct,
+      salt: PromiseOrValue<BigNumberish>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
     ): Promise<PopulatedTransaction>;
 
@@ -1002,6 +1129,12 @@ export interface ShootingCoinManager extends BaseContract {
       overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
+    quitGame(
+      account: PromiseOrValue<string>,
+      salt: PromiseOrValue<BigNumberish>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
     settleGame(
       gameId: PromiseOrValue<BigNumberish>,
       user1: PromiseOrValue<string>,
@@ -1030,6 +1163,17 @@ export interface ShootingCoinManager extends BaseContract {
     updateShootingRole(
       roleContract: PromiseOrValue<string>,
       overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    updateWhiteList(
+      coinAddress: PromiseOrValue<string>,
+      isWhite: PromiseOrValue<boolean>,
+      overrides?: Overrides & { from?: PromiseOrValue<string> }
+    ): Promise<PopulatedTransaction>;
+
+    usedSalt(
+      arg0: PromiseOrValue<BigNumberish>,
+      overrides?: CallOverrides
     ): Promise<PopulatedTransaction>;
 
     whitelist(

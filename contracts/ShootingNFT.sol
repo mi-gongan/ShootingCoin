@@ -44,24 +44,21 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
         _;
     }
 
-    function initialize(address roleContract, address managerContract)
-        public
-        initializer
-    {
+    function initialize(
+        address roleContract,
+        address managerContract
+    ) public initializer {
         shootingRole = roleContract;
         shootingManager = managerContract;
     }
 
-    function mint(address to, uint256 tokenId) public {
+    function mint(address to, uint256 tokenId) public onlyManager {
         _mint(to, tokenId);
     }
 
-    function tokenURI(uint256 tokenId)
-        public
-        view
-        override
-        returns (string memory)
-    {
+    function tokenURI(
+        uint256 tokenId
+    ) public view override returns (string memory) {
         return super.tokenURI(tokenId);
     }
 
@@ -92,4 +89,6 @@ contract ShootingNFT is ERC721EnumerableUpgradeable {
     ) internal {
         super._beforeTokenTransfer(from, to, tokenId, 0);
     }
+
+    uint256[45] private __gap;
 }

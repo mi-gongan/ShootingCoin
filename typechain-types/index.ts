@@ -52,3 +52,5 @@ export type { ShootingNFT } from "./contracts/ShootingNFT";
 export { ShootingNFT__factory } from "./factories/contracts/ShootingNFT__factory";
 export type { ShootingRole } from "./contracts/ShootingRole";
 export { ShootingRole__factory } from "./factories/contracts/ShootingRole__factory";
+export type { TestShootingCoin } from "./contracts/TestShootingCoin";
+export { TestShootingCoin__factory } from "./factories/contracts/TestShootingCoin__factory";

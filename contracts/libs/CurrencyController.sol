@@ -26,4 +26,6 @@ contract CurrencyController {
             IERC20(coinAddress).transfer(userAccount, amount);
         }
     }
+
+    uint256[48] private __gap;
 }

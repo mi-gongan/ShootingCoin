@@ -18,6 +18,8 @@ contract GameCore {
     //coin whitelist
     mapping(address => bool) public whitelist;
 
+    mapping(uint256 => uint256) public usedSalt;
+
     struct BetInfo {
         address coinAddress;
         uint256 betAmount;
@@ -66,6 +68,13 @@ contract GameCore {
         shootingNft = nftContract;
     }
 
+    function updateWhiteList(
+        address coinAddress,
+        bool isWhite
+    ) public onlyAdmin {
+        whitelist[coinAddress] = isWhite;
+    }
+
     function getShootingRole() public view returns (address) {
         return shootingRole;
     }
@@ -83,4 +92,6 @@ contract GameCore {
         delete betInfo[userAccount];
         isOnGame[userAccount] = 0;
     }
+
+    uint256[41] private __gap;
 }

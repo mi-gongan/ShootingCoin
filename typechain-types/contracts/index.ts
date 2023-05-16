@@ -10,3 +10,4 @@ export type { mock };
 export type { ShootingCoinManager } from "./ShootingCoinManager";
 export type { ShootingNFT } from "./ShootingNFT";
 export type { ShootingRole } from "./ShootingRole";
+export type { TestShootingCoin } from "./TestShootingCoin";

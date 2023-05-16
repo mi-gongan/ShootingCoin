@@ -64,6 +64,21 @@
       "address": "0x86A3AB587a0C0545F5808Ba8726bb5209d48a116",
       "txHash": "0x25e8e3f0548e284d75618c0118053754b769828f80cce18dfaf8579abd7bb6c3",
       "kind": "transparent"
+    },
+    {
+      "address": "0xaA34dA0C9fFdB0D1B015fd02B451eA2377eB863B",
+      "txHash": "0x701227b22a82e4ccbe08fdad4fe3d1fe58f96b7b294598673871612348e00533",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x2149858836b33B629aB54Ded8468F3C6D5907018",
+      "txHash": "0x659cef83e056dee297f07192affa9a432ff83500f07d19cb4b4c1ee8b9e28f07",
+      "kind": "transparent"
+    },
+    {
+      "address": "0x56003f01b0227329A47F4b2AEB91BEE7c95F594F",
+      "txHash": "0x6510054c7cb56e6a8cd39319cabe90b5dd64aaee6102516c8b1dd6e8625bbe78",
+      "kind": "transparent"
     }
   ],
   "impls": {
@@ -584,7 +599,7 @@
             "label": "nftStats",
             "offset": 0,
             "slot": "204",
-            "type": "t_mapping(t_uint256,t_struct(StatsInfo)5380_storage)",
+            "type": "t_mapping(t_uint256,t_struct(StatsInfo)6016_storage)",
             "contract": "ShootingNFT",
             "src": "contracts/ShootingNFT.sol:19"
           }
@@ -634,7 +649,7 @@
             "label": "mapping(uint256 => address)",
             "numberOfBytes": "32"
           },
-          "t_mapping(t_uint256,t_struct(StatsInfo)5380_storage)": {
+          "t_mapping(t_uint256,t_struct(StatsInfo)6016_storage)": {
             "label": "mapping(uint256 => struct ShootingNFT.StatsInfo)",
             "numberOfBytes": "32"
           },
@@ -646,7 +661,7 @@
             "label": "string",
             "numberOfBytes": "32"
           },
-          "t_struct(StatsInfo)5380_storage": {
+          "t_struct(StatsInfo)6016_storage": {
             "label": "struct ShootingNFT.StatsInfo",
             "members": [
               {
@@ -914,6 +929,1130 @@
               {
                 "label": "user2BetInfo",
                 "type": "t_struct(BetInfo)2851_storage",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "512"
+          },
+          "t_uint240": {
+            "label": "uint240",
+            "numberOfBytes": "30"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "b755fc89e73f3a73b79dc28831eb96ddd8745655c5221ded3dd4115bce260386": {
+      "address": "0x924bF4961DAE42C7cBDAf6Ee8F91Ecb9f815f044",
+      "txHash": "0xb8dcc8635426ea7911e19e5ef91d45b665c8ce1c1ab8796eacaaad383c44cf47",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:25"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:28"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:31"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:34"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:514"
+          },
+          {
+            "label": "_ownedTokens",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:22"
+          },
+          {
+            "label": "_ownedTokensIndex",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:25"
+          },
+          {
+            "label": "_allTokens",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:28"
+          },
+          {
+            "label": "_allTokensIndex",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:31"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_array(t_uint256)46_storage",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:171"
+          },
+          {
+            "label": "baseURI",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_string_storage",
+            "contract": "ShootingNFT",
+            "src": "contracts/ShootingNFT.sol:15"
+          },
+          {
+            "label": "shootingRole",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_address",
+            "contract": "ShootingNFT",
+            "src": "contracts/ShootingNFT.sol:16"
+          },
+          {
+            "label": "shootingManager",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_address",
+            "contract": "ShootingNFT",
+            "src": "contracts/ShootingNFT.sol:17"
+          },
+          {
+            "label": "nftStats",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_uint256,t_struct(StatsInfo)4557_storage)",
+            "contract": "ShootingNFT",
+            "src": "contracts/ShootingNFT.sol:19"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)46_storage": {
+            "label": "uint256[46]",
+            "numberOfBytes": "1472"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(address => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(StatsInfo)4557_storage)": {
+            "label": "mapping(uint256 => struct ShootingNFT.StatsInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StatsInfo)4557_storage": {
+            "label": "struct ShootingNFT.StatsInfo",
+            "members": [
+              {
+                "label": "statType",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "value",
+                "type": "t_uint88",
+                "offset": 1,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint88": {
+            "label": "uint88",
+            "numberOfBytes": "11"
+          }
+        }
+      }
+    },
+    "6d3854cb56189d713a48fe62c6dd149d1c0508cf80f913e8619b939ad030cea5": {
+      "address": "0x58ee65c173D2E4f96190a3068BcE5baA6CA9C54B",
+      "txHash": "0x47e5ae4e712c4b6612c304933eb3b3e10550665c40e7c685c9205516d1b48b13",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ContextUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/ContextUpgradeable.sol:36"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ERC165Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/utils/introspection/ERC165Upgradeable.sol:41"
+          },
+          {
+            "label": "_name",
+            "offset": 0,
+            "slot": "101",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:25"
+          },
+          {
+            "label": "_symbol",
+            "offset": 0,
+            "slot": "102",
+            "type": "t_string_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:28"
+          },
+          {
+            "label": "_owners",
+            "offset": 0,
+            "slot": "103",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:31"
+          },
+          {
+            "label": "_balances",
+            "offset": 0,
+            "slot": "104",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:34"
+          },
+          {
+            "label": "_tokenApprovals",
+            "offset": 0,
+            "slot": "105",
+            "type": "t_mapping(t_uint256,t_address)",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:37"
+          },
+          {
+            "label": "_operatorApprovals",
+            "offset": 0,
+            "slot": "106",
+            "type": "t_mapping(t_address,t_mapping(t_address,t_bool))",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:40"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "107",
+            "type": "t_array(t_uint256)44_storage",
+            "contract": "ERC721Upgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/ERC721Upgradeable.sol:514"
+          },
+          {
+            "label": "_ownedTokens",
+            "offset": 0,
+            "slot": "151",
+            "type": "t_mapping(t_address,t_mapping(t_uint256,t_uint256))",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:22"
+          },
+          {
+            "label": "_ownedTokensIndex",
+            "offset": 0,
+            "slot": "152",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:25"
+          },
+          {
+            "label": "_allTokens",
+            "offset": 0,
+            "slot": "153",
+            "type": "t_array(t_uint256)dyn_storage",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:28"
+          },
+          {
+            "label": "_allTokensIndex",
+            "offset": 0,
+            "slot": "154",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:31"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "155",
+            "type": "t_array(t_uint256)46_storage",
+            "contract": "ERC721EnumerableUpgradeable",
+            "src": "@openzeppelin/contracts-upgradeable/token/ERC721/extensions/ERC721EnumerableUpgradeable.sol:171"
+          },
+          {
+            "label": "baseURI",
+            "offset": 0,
+            "slot": "201",
+            "type": "t_string_storage",
+            "contract": "ShootingNFT",
+            "src": "contracts/ShootingNFT.sol:15"
+          },
+          {
+            "label": "shootingRole",
+            "offset": 0,
+            "slot": "202",
+            "type": "t_address",
+            "contract": "ShootingNFT",
+            "src": "contracts/ShootingNFT.sol:16"
+          },
+          {
+            "label": "shootingManager",
+            "offset": 0,
+            "slot": "203",
+            "type": "t_address",
+            "contract": "ShootingNFT",
+            "src": "contracts/ShootingNFT.sol:17"
+          },
+          {
+            "label": "nftStats",
+            "offset": 0,
+            "slot": "204",
+            "type": "t_mapping(t_uint256,t_struct(StatsInfo)5457_storage)",
+            "contract": "ShootingNFT",
+            "src": "contracts/ShootingNFT.sol:19"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_uint256)44_storage": {
+            "label": "uint256[44]",
+            "numberOfBytes": "1408"
+          },
+          "t_array(t_uint256)46_storage": {
+            "label": "uint256[46]",
+            "numberOfBytes": "1472"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)dyn_storage": {
+            "label": "uint256[]",
+            "numberOfBytes": "32"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_address,t_bool))": {
+            "label": "mapping(address => mapping(address => bool))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_mapping(t_uint256,t_uint256))": {
+            "label": "mapping(address => mapping(uint256 => uint256))",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_address)": {
+            "label": "mapping(uint256 => address)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(StatsInfo)5457_storage)": {
+            "label": "mapping(uint256 => struct ShootingNFT.StatsInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_string_storage": {
+            "label": "string",
+            "numberOfBytes": "32"
+          },
+          "t_struct(StatsInfo)5457_storage": {
+            "label": "struct ShootingNFT.StatsInfo",
+            "members": [
+              {
+                "label": "statType",
+                "type": "t_uint8",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "value",
+                "type": "t_uint88",
+                "offset": 1,
+                "slot": "0"
+              }
+            ],
+            "numberOfBytes": "32"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          },
+          "t_uint88": {
+            "label": "uint88",
+            "numberOfBytes": "11"
+          }
+        }
+      }
+    },
+    "54d5ccbf2949f5b4aa8cc161cfd17e1fd556158b8343861ca40878a880f26b75": {
+      "address": "0x425657386e21c1bd53708982c44533cA9910647c",
+      "txHash": "0x20ef2a0eda71f53b58d38dc417b9dcd29aaa03e408f175745ce6d04696d2e317",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "shootingRole",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:7"
+          },
+          {
+            "label": "shootingNft",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:8"
+          },
+          {
+            "label": "feeRecieveAddress",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:9"
+          },
+          {
+            "label": "isOnGame",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:10"
+          },
+          {
+            "label": "betInfo",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_struct(BetInfo)5973_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:12"
+          },
+          {
+            "label": "gameInfo",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_struct(GameInfo)5984_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:15"
+          },
+          {
+            "label": "gameHistory",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_array(t_struct(GameHistory)6001_storage)dyn_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:17"
+          },
+          {
+            "label": "whitelist",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:19"
+          },
+          {
+            "label": "usedSalt",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:21"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_array(t_uint256)41_storage",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:89"
+          },
+          {
+            "label": "gameFeePercent",
+            "offset": 0,
+            "slot": "50",
+            "type": "t_uint256",
+            "contract": "CurrencyController",
+            "src": "contracts/libs/CurrencyController.sol:8"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)48_storage",
+            "contract": "CurrencyController",
+            "src": "contracts/libs/CurrencyController.sol:30"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "99",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ShootingCoinManager",
+            "src": "contracts/ShootingCoinManager.sol:173"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_struct(GameHistory)6001_storage)dyn_storage": {
+            "label": "struct GameCore.GameHistory[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)41_storage": {
+            "label": "uint256[41]",
+            "numberOfBytes": "1312"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]",
+            "numberOfBytes": "1536"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)5_storage": {
+            "label": "uint256[5]",
+            "numberOfBytes": "160"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_struct(GameHistory)6001_storage)dyn_storage)": {
+            "label": "mapping(address => struct GameCore.GameHistory[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(BetInfo)5973_storage)": {
+            "label": "mapping(address => struct GameCore.BetInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(GameInfo)5984_storage)": {
+            "label": "mapping(uint256 => struct GameCore.GameInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(BetInfo)5973_storage": {
+            "label": "struct GameCore.BetInfo",
+            "members": [
+              {
+                "label": "coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "betAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "nftSkinId",
+                "type": "t_array(t_uint256)5_storage",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_struct(GameHistory)6001_storage": {
+            "label": "struct GameCore.GameHistory",
+            "members": [
+              {
+                "label": "gameId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "user1",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "user1coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "user1GetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "user2",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "user2coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "user2GetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "timeStamp",
+                "type": "t_uint240",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_struct(GameInfo)5984_storage": {
+            "label": "struct GameCore.GameInfo",
+            "members": [
+              {
+                "label": "user1",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "user2",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "user1BetInfo",
+                "type": "t_struct(BetInfo)5973_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "user2BetInfo",
+                "type": "t_struct(BetInfo)5973_storage",
+                "offset": 0,
+                "slot": "9"
+              }
+            ],
+            "numberOfBytes": "512"
+          },
+          "t_uint240": {
+            "label": "uint240",
+            "numberOfBytes": "30"
+          },
+          "t_uint256": {
+            "label": "uint256",
+            "numberOfBytes": "32"
+          },
+          "t_uint8": {
+            "label": "uint8",
+            "numberOfBytes": "1"
+          }
+        }
+      }
+    },
+    "15de76620b1635991ff149ed8a8ec026d1967dea75ba853baefb8ed7f4cd4076": {
+      "address": "0x134D3c7be92a8E992DCc4eafD813E523f2C48a6A",
+      "txHash": "0x323d107d2c01ce640ae058b9b07f54446b4d02e03c7b1f73a8837cfdeb1a5879",
+      "layout": {
+        "solcVersion": "0.8.17",
+        "storage": [
+          {
+            "label": "_initialized",
+            "offset": 0,
+            "slot": "0",
+            "type": "t_uint8",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:62",
+            "retypedFrom": "bool"
+          },
+          {
+            "label": "_initializing",
+            "offset": 1,
+            "slot": "0",
+            "type": "t_bool",
+            "contract": "Initializable",
+            "src": "@openzeppelin/contracts-upgradeable/proxy/utils/Initializable.sol:67"
+          },
+          {
+            "label": "shootingRole",
+            "offset": 2,
+            "slot": "0",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:7"
+          },
+          {
+            "label": "shootingNft",
+            "offset": 0,
+            "slot": "1",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:8"
+          },
+          {
+            "label": "feeRecieveAddress",
+            "offset": 0,
+            "slot": "2",
+            "type": "t_address",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:9"
+          },
+          {
+            "label": "isOnGame",
+            "offset": 0,
+            "slot": "3",
+            "type": "t_mapping(t_address,t_uint256)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:10"
+          },
+          {
+            "label": "betInfo",
+            "offset": 0,
+            "slot": "4",
+            "type": "t_mapping(t_address,t_struct(BetInfo)2952_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:12"
+          },
+          {
+            "label": "gameInfo",
+            "offset": 0,
+            "slot": "5",
+            "type": "t_mapping(t_uint256,t_struct(GameInfo)2963_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:15"
+          },
+          {
+            "label": "gameHistory",
+            "offset": 0,
+            "slot": "6",
+            "type": "t_mapping(t_address,t_array(t_struct(GameHistory)2980_storage)dyn_storage)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:17"
+          },
+          {
+            "label": "whitelist",
+            "offset": 0,
+            "slot": "7",
+            "type": "t_mapping(t_address,t_bool)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:19"
+          },
+          {
+            "label": "usedSalt",
+            "offset": 0,
+            "slot": "8",
+            "type": "t_mapping(t_uint256,t_uint256)",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:21"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "9",
+            "type": "t_array(t_uint256)41_storage",
+            "contract": "GameCore",
+            "src": "contracts/libs/GameCore.sol:96"
+          },
+          {
+            "label": "gameFeePercent",
+            "offset": 0,
+            "slot": "50",
+            "type": "t_uint256",
+            "contract": "CurrencyController",
+            "src": "contracts/libs/CurrencyController.sol:8"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "51",
+            "type": "t_array(t_uint256)48_storage",
+            "contract": "CurrencyController",
+            "src": "contracts/libs/CurrencyController.sol:30"
+          },
+          {
+            "label": "__gap",
+            "offset": 0,
+            "slot": "99",
+            "type": "t_array(t_uint256)50_storage",
+            "contract": "ShootingCoinManager",
+            "src": "contracts/ShootingCoinManager.sol:173"
+          }
+        ],
+        "types": {
+          "t_address": {
+            "label": "address",
+            "numberOfBytes": "20"
+          },
+          "t_array(t_struct(GameHistory)2980_storage)dyn_storage": {
+            "label": "struct GameCore.GameHistory[]",
+            "numberOfBytes": "32"
+          },
+          "t_array(t_uint256)41_storage": {
+            "label": "uint256[41]",
+            "numberOfBytes": "1312"
+          },
+          "t_array(t_uint256)48_storage": {
+            "label": "uint256[48]",
+            "numberOfBytes": "1536"
+          },
+          "t_array(t_uint256)50_storage": {
+            "label": "uint256[50]",
+            "numberOfBytes": "1600"
+          },
+          "t_array(t_uint256)5_storage": {
+            "label": "uint256[5]",
+            "numberOfBytes": "160"
+          },
+          "t_bool": {
+            "label": "bool",
+            "numberOfBytes": "1"
+          },
+          "t_mapping(t_address,t_array(t_struct(GameHistory)2980_storage)dyn_storage)": {
+            "label": "mapping(address => struct GameCore.GameHistory[])",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_bool)": {
+            "label": "mapping(address => bool)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_struct(BetInfo)2952_storage)": {
+            "label": "mapping(address => struct GameCore.BetInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_address,t_uint256)": {
+            "label": "mapping(address => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_struct(GameInfo)2963_storage)": {
+            "label": "mapping(uint256 => struct GameCore.GameInfo)",
+            "numberOfBytes": "32"
+          },
+          "t_mapping(t_uint256,t_uint256)": {
+            "label": "mapping(uint256 => uint256)",
+            "numberOfBytes": "32"
+          },
+          "t_struct(BetInfo)2952_storage": {
+            "label": "struct GameCore.BetInfo",
+            "members": [
+              {
+                "label": "coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "betAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "nftSkinId",
+                "type": "t_array(t_uint256)5_storage",
+                "offset": 0,
+                "slot": "2"
+              }
+            ],
+            "numberOfBytes": "224"
+          },
+          "t_struct(GameHistory)2980_storage": {
+            "label": "struct GameCore.GameHistory",
+            "members": [
+              {
+                "label": "gameId",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "user1",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "user1coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "user1GetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "3"
+              },
+              {
+                "label": "user2",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "4"
+              },
+              {
+                "label": "user2coinAddress",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "5"
+              },
+              {
+                "label": "user2GetAmount",
+                "type": "t_uint256",
+                "offset": 0,
+                "slot": "6"
+              },
+              {
+                "label": "timeStamp",
+                "type": "t_uint240",
+                "offset": 0,
+                "slot": "7"
+              }
+            ],
+            "numberOfBytes": "256"
+          },
+          "t_struct(GameInfo)2963_storage": {
+            "label": "struct GameCore.GameInfo",
+            "members": [
+              {
+                "label": "user1",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "0"
+              },
+              {
+                "label": "user2",
+                "type": "t_address",
+                "offset": 0,
+                "slot": "1"
+              },
+              {
+                "label": "user1BetInfo",
+                "type": "t_struct(BetInfo)2952_storage",
+                "offset": 0,
+                "slot": "2"
+              },
+              {
+                "label": "user2BetInfo",
+                "type": "t_struct(BetInfo)2952_storage",
                 "offset": 0,
                 "slot": "9"
               }

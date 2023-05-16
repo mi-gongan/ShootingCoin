@@ -42,4 +42,6 @@ contract ShootingRole is Initializable, AccessControlUpgradeable {
     function isAdmin(address account) public view returns (bool) {
         return hasRole(DEFAULT_ADMIN_ROLE, account);
     }
+
+    uint256[49] private __gap;
 }

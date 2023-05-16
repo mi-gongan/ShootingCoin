@@ -1,5 +1,5 @@
 # Shooting Coin
 
-ShootingRole deployed to: 0x82e405b7aBC1D332988F4117eb5E104fa7738B23
-ShootingCoinManager deployed to: 0xAd7a5D4F3535Da25EDF775b7A167819C1DAd3cc0
-ShootingNFT deployed to: 0x6Fc88Af4B9F6d3380E3Da703bc700D3dC0d86DBe
+ShootingRole deployed to: 0xffDe0e6710446F0367Dd3Ddcc7DCdD38CbF65137
+ShootingCoinManager deployed to: 0xA61861DeeaD6839B44d1CC1754acEfec1A2a0341
+ShootingNFT deployed to: 0x86A3AB587a0C0545F5808Ba8726bb5209d48a116

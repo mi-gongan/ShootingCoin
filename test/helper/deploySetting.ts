@@ -16,7 +16,7 @@ export async function deploySetting() {
 
   const ShootingCoinManager = await upgrades.deployProxy(
     ShootingCoinManagerToken,
-    [ShootingRole.address]
+    [ShootingRole.address, 5, owner.address]
   );
   await ShootingCoinManager.deployed();
 

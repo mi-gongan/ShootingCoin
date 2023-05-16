@@ -5,6 +5,7 @@ import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
 contract CurrencyController {
     address constant ETH_ADDRESS = address(0);
+    uint256 gameFeePercent;
 
     function despositCoin(address coinAddress, uint256 amount) public payable {
         if (coinAddress == ETH_ADDRESS) {

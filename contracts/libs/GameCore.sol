@@ -6,6 +6,7 @@ import "../interface/IShootingRole.sol";
 contract GameCore {
     address public shootingRole;
     address public shootingNft;
+    address public feeRecieveAddress;
     mapping(address => uint256) public isOnGame;
     //user on game, user address => bet info
     mapping(address => BetInfo) public betInfo;

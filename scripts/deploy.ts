@@ -14,7 +14,7 @@ async function main() {
 
   const ShootingCoinManager = await upgrades.deployProxy(
     ShootingCoinManagerToken,
-    [ShootingRole.address]
+    [ShootingRole.address, 5, "owner addres 자리"]
   );
   await ShootingCoinManager.deployed();
 
